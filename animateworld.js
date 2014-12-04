@@ -9,7 +9,7 @@
     this.world = world;
     var outer = (window.__sandbox ? window.__sandbox.output.div : document.body), doc = outer.ownerDocument;
     var node = outer.appendChild(doc.createElement("div"));
-    node.style.cssText = "position: relative; width: intrinsic; width: fit-content;";
+    node.style.cssText = "width: 50%; margin: 5% auto; border: 1px solid black;";
     this.pre = node.appendChild(doc.createElement("pre"));
     this.pre.appendChild(doc.createTextNode(world.toString()));
     this.button = node.appendChild(doc.createElement("div"));
