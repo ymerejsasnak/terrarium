@@ -13,7 +13,7 @@
     this.pre = node.appendChild(doc.createElement("pre"));
     this.pre.appendChild(doc.createTextNode(world.toString()));
     this.button = node.appendChild(doc.createElement("div"));
-    this.button.style.cssText = "position: absolute; bottom: 8px; right: -4.5em; color: white; font-family: tahoma, arial; " +
+    this.button.style.cssText = "color: white; font-family: tahoma, arial; " +
       "background: #4ab; cursor: pointer; border-radius: 18px; font-size: 70%; width: 3.5em; text-align: center;";
     this.button.innerHTML = "stop";
     var self = this;
