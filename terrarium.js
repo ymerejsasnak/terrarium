@@ -83,6 +83,37 @@ World.prototype.toString = function() {   //this would be the main one to refact
   }
   return output;
 }
+World.prototype.toDivs = function() {
+  for (var y = 0; y < this.grid.height; y++) {
+    for (var x = 0; x < this.grid.width; x++) {
+      var element = this.grid.get(new Vector(x, y));
+      var character = charFromElement(element);
+      var id = "#pos-" + x + "-" + y;
+
+      $(id).removeClass("empty wall plant smart-plant-eater tiger");
+      $(id).text(character);
+
+      switch (character) {
+      case " ":
+        $(id).addClass("empty");
+        break;
+      case "#":
+        $(id).addClass("wall");
+        $(id).text(" "); //wall is just background color, not the # symbol
+        break;
+      case "*":
+        $(id).addClass("plant");
+        break;
+      case "O":
+        $(id).addClass("smart-plant-eater");
+        break;
+      case "@":
+        $(id).addClass("tiger");
+        break;
+      }
+    }
+  }
+}
 
 
 function LifelikeWorld(map, legend) {
@@ -334,7 +365,7 @@ Tiger.prototype.act = function(context) {
   }
   //if starving will eat plants to try to stay alive
   var plant = context.find("*");
-  if (plant && this.energy < 10) {   
+  if (plant && this.energy < 2) {   
     return {type: "eat", direction: plant};
   }
 
@@ -353,32 +384,32 @@ Tiger.prototype.act = function(context) {
 
 
 
-var valley = 
-  ["####################################################",
-   "#  @              ####         ****              ###",
-   "#   *     ##                 ########       OO    ##",
-   "#   *    ##        O O                 ****       *#",
-   "#       ##*                        ##########     *#",
-   "#      ##***  *         ****                     **#",
-   "#* **  #  *  ***      #########        @@@       **#",
-   "#* **  #      *          O O      *              **#",
-   "#     ##                         ***          ######",
-   "#*          @@@          O O      *        O  #    #",
-   "#*                    #########                 ** #",
-   "###          ****          ***                  ** #",
-   "#       O                                  O       #",
-   "#   *     ##  ##  ##  ##               ###      *  #",
-   "#   **         #              *       #####  O     #",
-   "##  **  O   O  #  #    ***  ***        ###      ** #",
-   "###               #   *****                    ****#",
-   "####################################################"];
+var terrarium = 
+  ["##############################################################",
+   "#  @             ###   ####              ****              ###",
+   "#   *     ##                           ########       OO    ##",
+   "#   *    ##        O O                           ****       *#",
+   "#       ##*                            ***** ##########     *#",
+   "#      ##***  *         ****                               **#",
+   "#* **  #  *  ***      #########        @                   **#",
+   "#* **  #           *          O O      *                   **#",
+   "#          ##                              ***          ######",
+   "#*         ###   @                 O O      *        O  #    #",
+   "#*                         #####     ####                 ** #",
+   "###          ****               ***  **                   ** #",
+   "#       O                                            O       #",
+   "#   *     ##  ##  ##  ##                 O       ###      *  #",
+   "#   **         #              *          O  O   #####  O     #",
+   "##  **  O   O  #  #    ***  ***                  ###      ** #",
+   "###               #   *****                              ****#",
+   "##############################################################"];   //size: 62 width, 18 height
 
 var legend = {"#": Wall,
               "@": Tiger,
               "O": SmartPlantEater,
               "*": Plant};
 
-var world = new LifelikeWorld(valley, legend);
+var world = new LifelikeWorld(terrarium, legend);
 
 $(document).ready(function() {
 

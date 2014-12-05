@@ -1,5 +1,44 @@
 body {
+  background: linear-gradient(#DDF, #88F);
+  height: 100vh;
+}
+
+#container {
+  width: 95%;
+  height: 90%;
+  margin: 2% auto;
   font-family: courier;
-  font-size: 35px;
+  font-size: 200%;
+  font-weight: bold;
   text-align: center;
+}
+
+.empty, .wall, .plant, .smart-plant-eater, .tiger {
+  box-sizing: border-box;
+  width: 1.6%;
+  height: 5.5%;
+  background: linear-gradient(#DFC, #BFB);
+  float: left;
+}
+
+.empty {
+  
+}
+
+/*temp colors*/
+
+.wall {
+  background: linear-gradient(#BD992D, #9E7D18) ;
+}
+
+.plant {
+  color: green;
+}
+
+.smart-plant-eater {
+  color: gray;
+}
+
+.tiger {
+  color: orange;
 }
