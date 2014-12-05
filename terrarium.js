@@ -290,8 +290,9 @@ PlantEater.prototype.act = function(context) {
 }
 
 
-function SmartPlantEater() { //potential problems with original: random movement, eats all close plantlife, breed too fast
+function SmartPlantEater() {
   this.energy = 20;
+  this.direction = randomElement(directionNames);
 }
 SmartPlantEater.prototype.act = function(context) {
   var space = context.find(" ");
@@ -303,9 +304,10 @@ SmartPlantEater.prototype.act = function(context) {
         context.findAll("*").length > 1) { //won't eat plant if it's the only one in its view range (to not kill them all off)
     return {type: "eat", direction: plant};
   }
-  if (space) {      //???? how to make this so the movement is less random?
-    return {type: "move", direction: space};
+  if (context.look(this.direction) != " ") { //goes in straight line until hits something
+    this.direction = context.find(" ") || "s";
   }
+  return {type: "move", direction: this.direction};
 
 }
 
@@ -317,7 +319,7 @@ var valley = ["############################",
               "#####                 ######",
               "##   ***                **##",
               "#   *##**         **  O  *##",
-              "#    ***     O    ##**    *#",
+              "#    ***          ##**    *#",
               "#       O         ##***    #",
               "#                 ##**     #",
               "#   O       #*             #",
