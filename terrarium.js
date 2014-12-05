@@ -113,6 +113,7 @@ actionTypes.grow = function(critter) {
 actionTypes.move = function(critter, vector, action) {
   var dest = this.checkDestination(action, vector);
   if (dest === null || critter.energy <= 1 || this.grid.get(dest) != null) {
+    critter.energy -= 0.1; //still loses a little energy each turn even if not moving
     return false;
   }
   critter.energy -= 1;
