@@ -290,6 +290,26 @@ PlantEater.prototype.act = function(context) {
 }
 
 
+function SmartPlantEater() { //potential problems with original: random movement, eats all close plantlife, breed too fast
+  this.energy = 20;
+}
+SmartPlantEater.prototype.act = function(context) {
+  var space = context.find(" ");
+  if (this.energy > 60 && space) {
+    return {type: "reproduce", direction: space};
+  }
+  var plant = context.find("*");
+  if (plant && this.energy < 70 &&     //checks if energy levels are below a certain level (only eats when hungry)
+        context.findAll("*").length > 1) { //won't eat plant if it's the only one in its view range (to not kill them all off)
+    return {type: "eat", direction: plant};
+  }
+  if (space) {      //???? how to make this so the movement is less random?
+    return {type: "move", direction: space};
+  }
+
+}
+
+
 
 
 
@@ -307,7 +327,7 @@ var valley = ["############################",
               "############################"];
 
 var legend = {"#": Wall,
-              "O": PlantEater,
+              "O": SmartPlantEater,
               "*": Plant};
 
 var world = new LifelikeWorld(valley, legend);
