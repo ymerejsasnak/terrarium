@@ -304,31 +304,76 @@ SmartPlantEater.prototype.act = function(context) {
         context.findAll("*").length > 1) { //won't eat plant if it's the only one in its view range (to not kill them all off)
     return {type: "eat", direction: plant};
   }
-  if (context.look(this.direction) != " ") { //goes in straight line until hits something
-    this.direction = context.find(" ") || "s";
+  if (context.look(this.direction) != " " && space) { //goes in straight line until hits something
+    this.direction = space;
   }
   return {type: "move", direction: this.direction};
+}
 
+
+function Tiger() {
+  this.energy = 100;
+  this.direction = randomElement(directionNames);
+  this.preySeen = []; //works as queue
+}
+Tiger.prototype.act = function(context) {
+  // Average number of prey seen per turn
+  var seenPerTurn = this.preySeen.reduce(function(a, b) {
+    return a + b;
+  }, 0) / this.preySeen.length;
+  var prey = context.findAll("O");
+  this.preySeen.push(prey.length);
+  // Drop the first element from the array when it is longer than 6
+  if (this.preySeen.length > 6) {
+    this.preySeen.shift();
+  }
+  // Only eat if the predator saw more than ¼ prey animal per turn
+  if (prey.length && seenPerTurn > 0.25) {
+    return {type: "eat", direction: randomElement(prey)};
+  }
+  //if starving will eat plants to try to stay alive
+  var plant = context.find("*");
+  if (plant && this.energy < 10) {   
+    return {type: "eat", direction: plant};
+  }
+
+  var space = context.find(" ");
+  if (this.energy > 400 && space) {
+    return {type: "reproduce", direction: space};
+  }
+  if (context.look(this.direction) != " " && space) {
+    this.direction = space;
+  }
+  return {type: "move", direction: this.direction};
 }
 
 
 
 
 
-var valley = ["############################",
-              "#####                 ######",
-              "##   ***                **##",
-              "#   *##**         **  O  *##",
-              "#    ***          ##**    *#",
-              "#       O         ##***    #",
-              "#                 ##**     #",
-              "#   O       #*             #",
-              "#*          #**       O    #",
-              "#***        ##**    O    **#",
-              "##****     ###***       *###",
-              "############################"];
+
+var valley = 
+  ["####################################################",
+   "#  @              ####         ****              ###",
+   "#   *     ##                 ########       OO    ##",
+   "#   *    ##        O O                 ****       *#",
+   "#       ##*                        ##########     *#",
+   "#      ##***  *         ****                     **#",
+   "#* **  #  *  ***      #########        @@@       **#",
+   "#* **  #      *          O O      *              **#",
+   "#     ##                         ***          ######",
+   "#*          @@@          O O      *        O  #    #",
+   "#*                    #########                 ** #",
+   "###          ****          ***                  ** #",
+   "#       O                                  O       #",
+   "#   *     ##  ##  ##  ##               ###      *  #",
+   "#   **         #              *       #####  O     #",
+   "##  **  O   O  #  #    ***  ***        ###      ** #",
+   "###               #   *****                    ****#",
+   "####################################################"];
 
 var legend = {"#": Wall,
+              "@": Tiger,
               "O": SmartPlantEater,
               "*": Plant};
 
