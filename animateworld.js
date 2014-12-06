@@ -18,38 +18,34 @@
         $("#container").append("<div id=" + id + "></div>");
       }
     }
-
    
-   this.world.toDivs();
-
+    this.world.toDivs();
  
-   /*redo button so it works next*/
-
-    //this.button = node.appendChild(doc.createElement("div"));
-    //this.button.style.cssText = "color: white; font-family: tahoma, arial; " +
-    //  "background: #4ab; cursor: pointer; border-radius: 18px; font-size: 70%; width: 3.5em; text-align: center;";
-    //this.button.innerHTML = "stop";
-    var self = this;
-    //this.button.addEventListener("click", function() { self.clicked(); });
-    //this.disabled = false;
-    //if (active) active.disable();
-    active = this;
+    var startStop = $("#start-stop");/*redo button so it works next*/
+    startStop.text("STOP");
     
+    startStop.on("click", function() { 
+      self.clicked(); 
+    });
+
+    var self = this;
+    this.disabled = false;
+    if (active) active.disable();
+    active = this;
+
     this.interval = setInterval(function() { self.tick(); }, 333);
   }
-
-  
 
   Animated.prototype.clicked = function() {
     if (this.disabled) return;
     if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;
-      this.button.innerHTML = "start";
+      $("#start-stop").text("START");
     } else {
       var self = this;
       this.interval = setInterval(function() { self.tick(); }, 333);
-      this.button.innerHTML = "stop";
+      $("#start-stop").text("STOP");
     }
   };
 
@@ -59,11 +55,11 @@
   };
 
   Animated.prototype.disable = function() {
-    this.disabled = true;
+    $("#start-stop").disabled = true;
     clearInterval(this.interval);
-    this.button.innerHTML = "Disabled";
-    this.button.style.color = "red";
+    $("#start-stop").text("Disabled");
   };
 
   window.animateWorld = function(world) { new Animated(world); };
+
 })();

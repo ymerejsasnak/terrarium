@@ -13,6 +13,38 @@ body {
   text-align: center;
 }
 
+#controls {
+  width: 94%;
+  height: 9%;
+  margin-left: 2.5%;
+  background: linear-gradient(#EEE, #DDD);
+  border: 1px solid black;
+}
+
+button {
+  border: 1px solid black;
+  margin: 1%;
+  box-shadow: 2px 2px 4px black;
+}
+
+button:hover {
+  border: 1px solid gray;
+}
+
+button:active {
+  background: darkgray;
+}
+
+#start-stop {
+  width: 5%;
+  height: 50%;
+}
+
+
+
+
+
+
 .empty, .wall1, .wall2, .plant, .smart-plant-eater, .tiger {
   box-sizing: border-box;
   width: 1.6%;
