@@ -19,14 +19,11 @@ body {
   height: 5.5%;
   background: radial-gradient(#BFB, #DFC);
   float: left;
-  overflow: visible;
 }
 
 .empty {
   
 }
-
-/*temp colors*/
 
 .wall1 {
   background: linear-gradient(#BD992D, #9E7D18);
@@ -36,8 +33,11 @@ body {
   background: linear-gradient(#9E7D18, #BD992D);
 }
 
+
+/*temp colors*/
+
 .plant {
-  color: green;
+  
 }
 
 .smart-plant-eater {

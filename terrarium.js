@@ -89,33 +89,38 @@ World.prototype.toDivs = function() {
       var element = this.grid.get(new Vector(x, y));
       var character = charFromElement(element);
       var id = "#pos-" + x + "-" + y;
+      var div = $(id);
 
-      $(id).removeClass("empty wall1 wall2 plant smart-plant-eater tiger");
+      div.removeClass("empty wall1 wall2 plant smart-plant-eater tiger");
       
+
       switch (character) {
       case " ":
-        $(id).addClass("empty");
-        $(id).text(" ");
+        div.addClass("empty");
+        div.text(" ");
         break;
       case "#":
         if (y % 2 === 0) {
-          $(id).addClass("wall1");
+          div.addClass("wall1");
         } else {
-          $(id).addClass("wall2");
+          div.addClass("wall2");
         }
-        $(id).text(" "); //wall is just background color
+        div.text(" "); //wall is just background color
         break;
       case "*":
-        $(id).addClass("plant");
-        $(id).text("\u00A5"); //yen symbol looks like a plant!! :)
+        div.addClass("plant");
+        div.text("\u00A5"); //yen symbol looks like a plant!! :)
+        div.css("color", element.color);
         break;
       case "O":
-        $(id).addClass("smart-plant-eater");
-        $(id).text("\u0264"); //'ram's horns' looks like rabbit
+        div.addClass("smart-plant-eater");
+        div.text("\u0264"); //'ram's horns' looks like rabbit
+        div.css("color", element.color);
         break;
       case "@":
-        $(id).addClass("tiger");
-        $(id).text("\u0434");
+        div.addClass("tiger");
+        div.text("\u0434");
+        div.css("color", element.color);
         break;
       }
     }
@@ -297,6 +302,7 @@ function Wall() {} //does nothing at all  (works in either world object)
 
 function Plant() {
   this.energy = 3 + Math.random() * 4;
+  this.color = "rgb(0," + Math.floor(Math.random() * 20 + this.energy * 20) + ",0)";
 }
 Plant.prototype.act = function(context) {
   if (this.energy > 15) {
@@ -332,6 +338,7 @@ PlantEater.prototype.act = function(context) {
 function SmartPlantEater() {
   this.energy = 20;
   this.direction = randomElement(directionNames);
+  this.color = "rgb(" + Math.floor(this.energy * 2) + "," + Math.floor(this.energy * 2) + "," + Math.floor(this.energy * 2) + ")";
 }
 SmartPlantEater.prototype.act = function(context) {
   var space = context.find(" ");
@@ -354,6 +361,7 @@ function Tiger() {
   this.energy = 100;
   this.direction = randomElement(directionNames);
   this.preySeen = []; //works as queue
+  this.color = "rgb(" + Math.floor(this.energy) + "," + Math.floor(this.energy / 2) + ", 0";
 }
 Tiger.prototype.act = function(context) {
   // Average number of prey seen per turn
@@ -370,12 +378,7 @@ Tiger.prototype.act = function(context) {
   if (prey.length && seenPerTurn > 0.25) {
     return {type: "eat", direction: randomElement(prey)};
   }
-  //if starving will eat plants to try to stay alive
-  var plant = context.find("*");
-  if (plant && this.energy < 2) {   
-    return {type: "eat", direction: plant};
-  }
-
+ 
   var space = context.find(" ");
   if (this.energy > 400 && space) {
     return {type: "reproduce", direction: space};
