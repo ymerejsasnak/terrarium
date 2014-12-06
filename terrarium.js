@@ -401,7 +401,7 @@ Tiger.prototype.act = function(context) {
 
 
 
-var terrarium = 
+var defaultWorld = 
   ["##############################################################",
    "#  @             ###   ####            ##****              ###",
    "#   *     ##                           ##    ##       OO    ##",
@@ -415,7 +415,7 @@ var terrarium =
    "#*                         #####     ####                 ** #",
    "###          ****               ***  **                   ** #",
    "#       O   ###                                      O       #",
-   "#   *     ## #### ##  ##                 O       ###      *  #",
+   "#   *     ####### ##  ##                 O       ###      *  #",
    "#   **         ####           *          O  O   #####  O     #",
    "##  **  O   O  ####    ***  ***                  ###      ** #",
    "###            ####   *****                              ****#",
@@ -426,10 +426,14 @@ var legend = {"#": Wall,
               "O": SmartPlantEater,
               "*": Plant};
 
-var world = new LifelikeWorld(terrarium, legend);
+var world = new LifelikeWorld(defaultWorld, legend);
 
 $(document).ready(function() {
 
   animateWorld(world);
+
+  $("#reset").on("click", function() {
+    location.reload();  //will have to find a better way to do this eventually
+  });
 
 });

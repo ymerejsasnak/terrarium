@@ -6,10 +6,9 @@
   var active = null;
 
   function Animated(world) {
+    
     this.world = world;
-    var outer = document.body;
-    var doc = outer.ownerDocument;
-
+    
     //create empty world divs first 
     for (var y = 0; y < world.grid.height; y++) {
       for (var x = 0; x < world.grid.width; x++) {
@@ -21,19 +20,18 @@
    
     this.world.toDivs();
  
-    var startStop = $("#start-stop");/*redo button so it works next*/
-    startStop.text("STOP");
-    
-    startStop.on("click", function() { 
-      self.clicked(); 
-    });
-
+ 
     var self = this;
     this.disabled = false;
     if (active) active.disable();
     active = this;
 
-    this.interval = setInterval(function() { self.tick(); }, 333);
+
+    $("#start-stop").on("click", function() { 
+      self.clicked(); 
+    });
+
+    
   }
 
   Animated.prototype.clicked = function() {
@@ -63,3 +61,13 @@
   window.animateWorld = function(world) { new Animated(world); };
 
 })();
+
+
+
+
+
+
+
+
+
+
