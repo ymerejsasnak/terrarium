@@ -21,7 +21,10 @@
   
   <div id="controls">
     <button id="start-stop">START</button>
-    <button id="reset">RESET</button>
+    
+    <label for="speed">Speed: (faster)</label>
+    <input id="speed" type="range" min="0" max="1000" value="333" step="10"></input>
+    <label for="speed">(slower)</label>
 
     <span class="separator"> | </span>
 
@@ -37,6 +40,8 @@
     </select>
     
     <span class="separator"> | </span>
+
+    <button id="reset">RESET</button>
     
   </div>
 

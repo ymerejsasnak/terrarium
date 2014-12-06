@@ -38,7 +38,7 @@ function World(map, legend) {
   var grid = new Grid(map[0].length, map.length);
   this.grid = grid;
   this.legend = legend;
-
+  
   map.forEach(function(line, y) {
     for (var x = 0; x < line.length; x++) {
       grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
@@ -434,11 +434,9 @@ $(document).ready(function() {
 
   animateWorld(world);
 
-  $("#reset").on("click", function() { 
-    $("#start-stop").trigger("click", [true]); 
-    world.resetWorld(defaultWorld, legend);
-    world.drawDivs();
-  });
+  //start-stop and speed handlers are in animateworld function -- can i get it out and put it here??
+
+
 
   $("#clear").on("click", function() {
     world.clearWorld();
@@ -453,6 +451,12 @@ $(document).ready(function() {
 
   $(".cell").on("click", function() {
     world.editCell($(this), selectedElement);
+    world.drawDivs();
+  });
+
+  $("#reset").on("click", function() { 
+    $("#start-stop").trigger("click", [true]); 
+    world.resetWorld(defaultWorld, legend);
     world.drawDivs();
   });
 

@@ -13,7 +13,7 @@
    
     this.world.drawDivs();
  
-
+    
     var self = this;
     this.disabled = false;
     if (active) active.disable();
@@ -21,10 +21,13 @@
 
 
     $("#start-stop").on("click", function(event, reset) { 
-      self.clicked(reset); 
+      self.clicked(reset);
     });
 
-    
+    $("#speed").on("change", function() {
+       self.speedChange($(this).val());
+    });
+
   }
 
   Animated.prototype.clicked = function(reset) {
@@ -42,6 +45,14 @@
       $("#start-stop").text("STOP");
     }
   };
+
+  Animated.prototype.speedChange = function(speed) {
+    var self = this;
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+    this.interval = setInterval(function() { self.tick(); }, speed);
+  }
 
   Animated.prototype.tick = function() {
     this.world.turn();

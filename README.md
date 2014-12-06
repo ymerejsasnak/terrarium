@@ -10,6 +10,9 @@ next to implement:<br><br>
 
 
 
+-fix clear and edit functions so outer wall cannot be removed (errors possible if it's not there)<br>
+
+-allow speed selector<br>
 
 -adjust editing so it can use mousedown to 'paint' cells in rather than one at a time<br>
 
