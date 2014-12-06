@@ -44,6 +44,7 @@ button:active {
 }
 
 .separator {
+  color: darkgray;
   font-size: 2em;
   margin: 2%;
 }
@@ -51,7 +52,7 @@ button:active {
 
 
 
-.empty, .wall1, .wall2, .plant, .smart-plant-eater, .tiger {
+.cell {
   box-sizing: border-box;
   width: 1.6%;
   height: 5.5%;

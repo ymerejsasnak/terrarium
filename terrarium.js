@@ -126,6 +126,24 @@ World.prototype.toDivs = function() {
     }
   }
 }
+World.prototype.resetWorld = function(map, legend) {
+  var grid = new Grid(map[0].length, map.length);
+  this.grid = grid;
+  this.legend = legend;
+
+  map.forEach(function(line, y) {
+    for (var x = 0; x < line.length; x++) {
+      grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
+    }
+  });
+}
+World.prototype.clearWorld = function() {
+  for (var y = 0; y < this.grid.height; y++) {
+    for (var x = 0; x < this.grid.width; x++) {
+      this.grid.set(new Vector(x, y), null);
+    }
+  }      
+}
 
 
 function LifelikeWorld(map, legend) {
@@ -432,12 +450,15 @@ $(document).ready(function() {
 
   animateWorld(world);
 
-  $("#reset").on("click", function() {
-    location.reload();  //will have to find a better way to do this eventually
+  $("#reset").on("click", function() { //this all works, only prob is reset will start animation again if its stopped
+    $("#start-stop").trigger("click", [true]); 
+    world.resetWorld(defaultWorld, legend);
+    world.toDivs();
   });
 
   $("#clear").on("click", function() {
-    
-  })
-
+    world.clearWorld();
+    world.toDivs();
+  });
+  
 });
