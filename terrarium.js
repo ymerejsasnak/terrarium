@@ -141,6 +141,20 @@ World.prototype.clearWorld = function() {
     }
   }      
 }
+World.prototype.editCell = function(cell, character) {
+  var id = cell.attr("id")           //format:  "#pos-" + x + "-" + y;
+  var x = parseInt(id.slice(id.indexOf("-") + 1, id.lastIndexOf("-"))); 
+  var y = parseInt(id.slice(id.lastIndexOf("-") + 1));
+  var position = new Vector(x, y);
+  var element = elementFromChar(this.legend, character);
+
+  //turn to empty cell if it's already the selected type
+  if (element && this.grid.get(position) && this.grid.get(position).originChar === element.originChar) { 
+    this.grid.set(position, null);
+  } else {
+    this.grid.set(position, element);
+  }
+}
 
 
 function LifelikeWorld(map, legend) {
@@ -411,11 +425,16 @@ var legend = {"#": Wall,
 
 var world = new LifelikeWorld(defaultWorld, legend);
 
+
+
+
+
+
 $(document).ready(function() {
 
   animateWorld(world);
 
-  $("#reset").on("click", function() { //this all works, only prob is reset will start animation again if its stopped
+  $("#reset").on("click", function() { 
     $("#start-stop").trigger("click", [true]); 
     world.resetWorld(defaultWorld, legend);
     world.drawDivs();
@@ -426,6 +445,17 @@ $(document).ready(function() {
     world.drawDivs();
   });
   
+  var selectedElement = " ";  
+
+  $("#edit-menu").on("change", function() {
+    selectedElement = $(this).val();
+  });
+
+  $(".cell").on("click", function() {
+    world.editCell($(this), selectedElement);
+    world.drawDivs();
+  });
+
 });
 
 

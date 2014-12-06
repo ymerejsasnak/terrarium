@@ -58,6 +58,7 @@ button:active {
   height: 5.5%;
   background: radial-gradient(#BEF0AD, #A9E8AE);
   float: left;
+  cursor: default;
 }
 
 .wall1 {
