@@ -38,6 +38,15 @@ button:active {
   background: darkgray;
 }
 
+#edit-menu {
+  margin: 1.3%;
+  margin-left: .2%;
+}
+
+.separator {
+  font-size: 2em;
+  margin: 2%;
+}
 
 
 
@@ -50,10 +59,6 @@ button:active {
   float: left;
 }
 
-.empty {
-  
-}
-
 .wall1 {
   background: linear-gradient(#BD992D, #9E7D18);
 }
@@ -63,16 +68,4 @@ button:active {
 }
 
 
-/*temp colors*/
 
-.plant {
-  
-}
-
-.smart-plant-eater {
-  color: gray;
-}
-
-.tiger {
-  color: orange;
-}

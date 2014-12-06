@@ -436,4 +436,8 @@ $(document).ready(function() {
     location.reload();  //will have to find a better way to do this eventually
   });
 
+  $("#clear").on("click", function() {
+    
+  })
+
 });
