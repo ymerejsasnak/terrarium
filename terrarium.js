@@ -302,7 +302,7 @@ function Wall() {} //does nothing at all  (works in either world object)
 
 function Plant() {
   this.energy = 3 + Math.random() * 4;
-  this.color = "rgb(0," + Math.floor(Math.random() * 20 + this.energy * 20) + ",0)";
+  this.color = "rgb(0," + Math.floor(this.energy * 20) + ",0)";
 }
 Plant.prototype.act = function(context) {
   if (this.energy > 15) {
@@ -312,6 +312,7 @@ Plant.prototype.act = function(context) {
     }
   }
   if (this.energy < 20) {
+    this.color = "rgb(0," + Math.floor(this.energy * 10 + 50) + ",0)";
     return {type: "grow"};
   }
 }
@@ -348,6 +349,7 @@ SmartPlantEater.prototype.act = function(context) {
   var plant = context.find("*");
   if (plant && this.energy < 70 &&     //checks if energy levels are below a certain level (only eats when hungry)
         context.findAll("*").length > 1) { //won't eat plant if it's the only one in its view range (to not kill them all off)
+    this.color = "rgb(" + Math.floor(this.energy * 2) + "," + Math.floor(this.energy * 2) + "," + Math.floor(this.energy * 2) + ")";
     return {type: "eat", direction: plant};
   }
   if (context.look(this.direction) != " " && space) { //goes in straight line until hits something
@@ -361,7 +363,7 @@ function Tiger() {
   this.energy = 100;
   this.direction = randomElement(directionNames);
   this.preySeen = []; //works as queue
-  this.color = "rgb(" + Math.floor(this.energy) + "," + Math.floor(this.energy / 2) + ", 0";
+  this.color = "rgb(" + Math.floor(this.energy / 2 + 50) + "," + Math.floor(this.energy / 4) + ", 0";
 }
 Tiger.prototype.act = function(context) {
   // Average number of prey seen per turn
@@ -376,6 +378,7 @@ Tiger.prototype.act = function(context) {
   }
   // Only eat if the predator saw more than ¼ prey animal per turn
   if (prey.length && seenPerTurn > 0.25) {
+    this.color = "rgb(" + Math.floor(this.energy / 2 + 50) + "," + Math.floor(this.energy / 4) + ", 0";
     return {type: "eat", direction: randomElement(prey)};
   }
  
