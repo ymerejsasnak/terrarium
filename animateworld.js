@@ -8,17 +8,10 @@
   function Animated(world) {
     
     this.world = world;
-    
-    //create empty world divs first 
-    for (var y = 0; y < world.grid.height; y++) {
-      for (var x = 0; x < world.grid.width; x++) {
-
-        var id = "pos-" + x + "-" + y;
-        $("#container").append("<div class='cell' id=" + id + "></div>");
-      }
-    }
    
-    this.world.toDivs();
+    this.world.createDivs();
+   
+    this.world.drawDivs();
  
 
     var self = this;
@@ -52,7 +45,7 @@
 
   Animated.prototype.tick = function() {
     this.world.turn();
-    this.world.toDivs();
+    this.world.drawDivs();
   };
 
   Animated.prototype.disable = function() {

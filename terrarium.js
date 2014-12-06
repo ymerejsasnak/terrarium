@@ -72,18 +72,15 @@ World.prototype.checkDestination = function(action, vector) {
     }
   }
 }
-World.prototype.toString = function() {   //this would be the main one to refactor into outputing divs eventually
-  var output = "";
-  for (var y = 0; y < this.grid.height; y++) {
-    for (var x = 0; x < this.grid.width; x++) {
-      var element = this.grid.get(new Vector(x, y));
-      output += charFromElement(element);
+World.prototype.createDivs = function() {
+    for (var y = 0; y < world.grid.height; y++) {
+      for (var x = 0; x < world.grid.width; x++) {
+        var id = "pos-" + x + "-" + y;
+        $("#container").append("<div class='cell' id=" + id + "></div>");
+      }
     }
-    output += "\n";
-  }
-  return output;
 }
-World.prototype.toDivs = function() {
+World.prototype.drawDivs = function() {
   for (var y = 0; y < this.grid.height; y++) {
     for (var x = 0; x < this.grid.width; x++) {
       var element = this.grid.get(new Vector(x, y));
@@ -278,39 +275,7 @@ function dirPlus(dir, n) { //direction is from above list, n is number of 45degr
 }
 
 
-//=====================================================================
-//THESE CRITTERS WORK WITH ORIGINAL WORLD OBJECT, NOT IN NEW LIFELIKE WORLD OBJECT
 
-function WallFollower() {
-  this.direction = "s";
-}
-WallFollower.prototype.act = function(view) {
-  var start = this.direction;
-  if (view.look(dirPlus(this.direction, -3)) != " ") {
-    start = this.direction = dirPlus(this.direction, -2);
-  }
-  while (view.look(this.direction) != " ") {
-    this.direction = dirPlus(this.direction, 1);
-    if (this.direction === start) {
-      break;
-    }
-  }
-  return {type: "move", direction: this.direction};
-}
-
-
-function BouncingCritter() {
-  this.direction = randomElement(directionNames);
-}
-BouncingCritter.prototype.act = function(view) {
-  if (view.look(this.direction) != " ") {
-    this.direction = view.find(" ") || "s";
-  }
-  return {type: "move", direction: this.direction};
-}
-
-
-//===================================================
 
 
 //LIFELIKEWORLD CRITTERS
@@ -453,12 +418,42 @@ $(document).ready(function() {
   $("#reset").on("click", function() { //this all works, only prob is reset will start animation again if its stopped
     $("#start-stop").trigger("click", [true]); 
     world.resetWorld(defaultWorld, legend);
-    world.toDivs();
+    world.drawDivs();
   });
 
   $("#clear").on("click", function() {
     world.clearWorld();
-    world.toDivs();
+    world.drawDivs();
   });
   
 });
+
+
+
+
+
+
+
+
+
+//=====================================================================
+//THESE CRITTERS WORK WITH ORIGINAL WORLD OBJECT, NOT IN NEW LIFELIKE WORLD OBJECT
+//saved for the wall following code to use in future critter
+
+function WallFollower() {
+  this.direction = "s";
+}
+WallFollower.prototype.act = function(view) {
+  var start = this.direction;
+  if (view.look(dirPlus(this.direction, -3)) != " ") {
+    start = this.direction = dirPlus(this.direction, -2);
+  }
+  while (view.look(this.direction) != " ") {
+    this.direction = dirPlus(this.direction, 1);
+    if (this.direction === start) {
+      break;
+    }
+  }
+  return {type: "move", direction: this.direction};
+}
+
