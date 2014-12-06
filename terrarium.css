@@ -8,7 +8,7 @@ body {
   height: 90%;
   margin: 0 auto;
   font-family: Courier New, courier;
-  font-size: 200%;
+  font-size: 5vmin;
   font-weight: bold;
   text-align: center;
 }
@@ -22,11 +22,12 @@ body {
 }
 
 button {
-  width: 5%;
+  width: 7%;
   height: 50%;
   border: 1px solid black;
-  margin: 1%;
+  margin: 1.3%;
   box-shadow: 2px 2px 4px black;
+  font-size: 3vmin;
 }
 
 button:hover {
