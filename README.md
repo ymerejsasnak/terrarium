@@ -7,10 +7,11 @@ basic program from following the chapter and added exercises are done<br><br><br
 
 
 next to implement:<br><br>
--prettify display with jquery<br>
-(turn into grid of divs, each creature different color (slightly random and/or based on energy, background colors, etc) use special characters (ie Yen for plant))<br>
--add more functionality to page<br>
-(buttons to reset simulation, editor feature to define starting world directly in page with mouse)<br>
--add more lifeforms?(virii, bugs, competing herbivores/carnivors, etc)<br>
--add ability to edit lifeform properties on page?<br>
--clean up and organize code better!  maybe split into more files, etc<br>
+--each creature's color based on energy level and maybe also slightly randomized<br>
+--remake start/stop button<br>
+--add more functionality to page:<br>
+buttons to reset simulation<br>
+editor feature to define starting world<br>
+--add more lifeforms?(virii, bugs, competing herbivores/carnivores, etc)<br>
+--add ability to edit lifeform properties on page?<br>
+--clean up and organize code better!  maybe split into more files, etc<br>

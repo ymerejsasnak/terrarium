@@ -90,25 +90,32 @@ World.prototype.toDivs = function() {
       var character = charFromElement(element);
       var id = "#pos-" + x + "-" + y;
 
-      $(id).removeClass("empty wall plant smart-plant-eater tiger");
-      $(id).text(character);
-
+      $(id).removeClass("empty wall1 wall2 plant smart-plant-eater tiger");
+      
       switch (character) {
       case " ":
         $(id).addClass("empty");
+        $(id).text(" ");
         break;
       case "#":
-        $(id).addClass("wall");
-        $(id).text(" "); //wall is just background color, not the # symbol
+        if (y % 2 === 0) {
+          $(id).addClass("wall1");
+        } else {
+          $(id).addClass("wall2");
+        }
+        $(id).text(" "); //wall is just background color
         break;
       case "*":
         $(id).addClass("plant");
+        $(id).text("\u00A5"); //yen symbol looks like a plant!! :)
         break;
       case "O":
         $(id).addClass("smart-plant-eater");
+        $(id).text("\u0264"); //'ram's horns' looks like rabbit
         break;
       case "@":
         $(id).addClass("tiger");
+        $(id).text("\u0434");
         break;
       }
     }
