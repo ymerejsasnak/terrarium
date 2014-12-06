@@ -318,7 +318,7 @@ Plant.prototype.act = function(context) {
 }
 
 
-function PlantEater() {
+function PlantEater() {//currently not used
   this.energy = 20;
 }
 PlantEater.prototype.act = function(context) {
@@ -339,7 +339,9 @@ PlantEater.prototype.act = function(context) {
 function SmartPlantEater() {
   this.energy = 20;
   this.direction = randomElement(directionNames);
-  this.color = "rgb(" + Math.floor(this.energy * 2) + "," + Math.floor(this.energy * 2) + "," + Math.floor(this.energy * 2) + ")";
+  this.color = "rgb(" + (180 - Math.floor(this.energy * 2)) + 
+                  "," + (180 - Math.floor(this.energy * 2)) + 
+                  "," + (180 - Math.floor(this.energy * 2)) + ")";
 }
 SmartPlantEater.prototype.act = function(context) {
   var space = context.find(" ");
@@ -349,7 +351,9 @@ SmartPlantEater.prototype.act = function(context) {
   var plant = context.find("*");
   if (plant && this.energy < 70 &&     //checks if energy levels are below a certain level (only eats when hungry)
         context.findAll("*").length > 1) { //won't eat plant if it's the only one in its view range (to not kill them all off)
-    this.color = "rgb(" + Math.floor(this.energy * 2) + "," + Math.floor(this.energy * 2) + "," + Math.floor(this.energy * 2) + ")";
+    this.color = "rgb(" + (180 - Math.floor(this.energy * 2)) + 
+                  "," + (180 - Math.floor(this.energy * 2)) + 
+                  "," + (180 - Math.floor(this.energy * 2)) + ")";
     return {type: "eat", direction: plant};
   }
   if (context.look(this.direction) != " " && space) { //goes in straight line until hits something
