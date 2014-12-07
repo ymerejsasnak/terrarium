@@ -437,6 +437,40 @@ $(document).ready(function() {
   //start-stop handler is in animateworld function -- can i get it out and put it here??
 
   $("#speed").on("input", function() {
+    var speedString;
+    switch ($(this).val()) {
+      case "100":
+        speedString = "greased";
+        break;
+      case "200":
+        speedString = "zippy";
+        break;
+      case "300":
+        speedString = "brisk";
+        break;
+      case "400":
+        speedString = "walking";
+        break;
+      case "500":
+        speedString = "calm";
+        break;
+      case "600":
+        speedString = "tired";
+        break;
+      case "700":
+        speedString = "lethargic";
+        break;
+      case "800":
+        speedString = "sleepwalking";
+        break;
+      case "900":
+        speedString = "painful";
+        break;
+      case "1000":
+        speedString = "excruciating";
+        break;
+    }
+    $("#speed-label").text("Speed: " + speedString);
     $("#start-stop").trigger("click", true);
   });
 
