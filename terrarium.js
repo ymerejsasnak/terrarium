@@ -408,7 +408,7 @@ SmartPlantEater.prototype.act = function(context) {
     return {type: "eat", direction: plant};
   }
   var plant = context.find("~"); //resorts to vines if no plants to eat
-  if (plant && this.energy < 60) {
+  if (plant && this.energy < 60 && context.findAll("~").length > 1) {
     return {type: "eat", direction: plant};  
   }
   if (context.look(this.direction) != " " && space) { //goes in straight line until hits something
