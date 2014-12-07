@@ -24,7 +24,7 @@
       self.clicked(reset);
     });
 
-    $("#speed").on("change", function() {
+    $("#speed").on("input", function() {
        self.speedChange($(this).val());
     });
 
