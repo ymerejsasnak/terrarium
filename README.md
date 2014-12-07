@@ -16,7 +16,7 @@ next to implement:<br><br>
 --add more lifeforms? (maybe have to introduce critter 'class' or 'type')<br>
 ideas: virus-turns other lifeforms into virii<br>
         competing herbivores/carnivores<br>
-        vine - plant that hugs walls(use wall follower movement code)<br>
+        vine - plant that grows in straight lines (not working yet...also need plant eaters to eat this too)<br>
         carnivorous plant - doesn't move, but eats anything that ends up next to it<br>
         evolver - starts as plant, becomes herbivore at certain level, then carnivore, then splits into two baby evolvers<br>
 

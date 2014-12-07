@@ -88,7 +88,7 @@ World.prototype.drawDivs = function() {
       var id = "#pos-" + x + "-" + y;
       var div = $(id);
 
-      div.removeClass("empty wall1 wall2 plant smart-plant-eater tiger");
+      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger");
       
 
       switch (character) {
@@ -119,6 +119,10 @@ World.prototype.drawDivs = function() {
         div.text("\u0434");
         div.css("color", element.color);
         break;
+      case "~":
+        div.addClass("vine");
+        div.text(character);
+        div.css("color", element.color);
       }
     }
   }
@@ -296,6 +300,23 @@ function dirPlus(dir, n) { //direction is from above list, n is number of 45degr
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //LIFELIKEWORLD CRITTERS
 
 function Wall() {} //does nothing at all  (works in either world object)
@@ -303,7 +324,7 @@ function Wall() {} //does nothing at all  (works in either world object)
 
 function Plant() {
   this.energy = 3 + Math.random() * 4;
-  this.color = "rgb(0," + Math.floor(this.energy * 20) + ",0)";
+  this.color = "rgb(0," + Math.floor(this.energy * 10 + 50) + ",0)";
 }
 Plant.prototype.act = function(context) {
   if (this.energy > 15) {
@@ -319,6 +340,33 @@ Plant.prototype.act = function(context) {
 }
 
 
+function Vine() { //wall hugging plant()
+  this.energy = 5 + Math.random() * 5;
+  this.direction = randomElement(directionNames);
+  this.color = "rgb(0," + Math.floor(this.energy * 10) + ",99)";
+}
+Vine.prototype.act = function(context) {
+  if (this.energy > 15) {
+    var start = this.direction;
+    if (context.look(this.direction) === " " && context.findAll("~").length <= 2) { //reproduces in more line-link patterns
+      return {type: "reproduce", direction: this.direction};
+    } else {
+      this.direction = randomElement(directionNames);
+    }
+    
+  }
+  if (this.energy < 20) {
+
+    this.color = "rgb(0," + Math.floor(this.energy * 10) + ",99)";
+    return {type: "grow"};
+  }
+}
+
+
+
+
+
+
 function PlantEater() {//currently not used
   this.energy = 20;
 }
@@ -327,7 +375,7 @@ PlantEater.prototype.act = function(context) {
   if (this.energy > 60 && space) {
     return {type: "reproduce", direction: space};
   }
-  var plant = context.find("*");  //plant symbol...put these into an object or something later
+  var plant = context.find("*") ;  //plant symbol...put these into an object or something later
   if (plant) {
     return {type: "eat", direction: plant};
   }
@@ -345,17 +393,23 @@ function SmartPlantEater() {
                   "," + (Math.floor(this.energy * 3)) + ")";
 }
 SmartPlantEater.prototype.act = function(context) {
+  this.color = "rgb(" + (Math.floor(this.energy * 3)) + 
+                  "," + (Math.floor(this.energy * 3)) + 
+                  "," + (Math.floor(this.energy * 3)) + ")";
+
   var space = context.find(" ");
   if (this.energy > 60 && space) {
     return {type: "reproduce", direction: space};
   }
+  //checks if energy levels are below a certain level (only eats when hungry)
+    //won't eat plant if it's the only one in its view range (to not kill them all off) 
   var plant = context.find("*");
-  if (plant && this.energy < 70 &&     //checks if energy levels are below a certain level (only eats when hungry)
-        context.findAll("*").length > 1) { //won't eat plant if it's the only one in its view range (to not kill them all off)
-    this.color = "rgb(" + (Math.floor(this.energy * 3)) + 
-                  "," + (Math.floor(this.energy * 3)) + 
-                  "," + (Math.floor(this.energy * 3)) + ")";
+  if (plant && this.energy < 70 && context.findAll("*").length > 1) {
     return {type: "eat", direction: plant};
+  }
+  var plant = context.find("~"); //resorts to vines if no plants to eat
+  if (plant && this.energy < 60) {
+    return {type: "eat", direction: plant};  
   }
   if (context.look(this.direction) != " " && space) { //goes in straight line until hits something
     this.direction = space;
@@ -425,7 +479,8 @@ var defaultWorld =
 var legend = {"#": Wall,
               "@": Tiger,
               "O": SmartPlantEater,
-              "*": Plant};
+              "*": Plant,
+              "~": Vine};
 
 var world = new LifelikeWorld(defaultWorld, legend);
 
