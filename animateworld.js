@@ -39,7 +39,7 @@
         return;
       }
       var self = this;
-      this.interval = setInterval(function() { self.tick(); }, speed);
+      this.interval = setInterval(function() { self.tick(); }, 1100 - speed);
       $("#start-stop").text("STOP");
     }
   };

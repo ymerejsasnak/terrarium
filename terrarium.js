@@ -135,8 +135,8 @@ World.prototype.resetWorld = function(map, legend) {
   });
 }
 World.prototype.clearWorld = function() {
-  for (var y = 0; y < this.grid.height; y++) {
-    for (var x = 0; x < this.grid.width; x++) {
+  for (var y = 1; y < this.grid.height - 1; y++) {
+    for (var x = 1; x < this.grid.width - 1; x++) {
       this.grid.set(new Vector(x, y), null);
     }
   }      
@@ -145,6 +145,9 @@ World.prototype.editCell = function(cell, character) {
   var id = cell.attr("id")           //format:  "#pos-" + x + "-" + y;
   var x = parseInt(id.slice(id.indexOf("-") + 1, id.lastIndexOf("-"))); 
   var y = parseInt(id.slice(id.lastIndexOf("-") + 1));
+  if (x === 0 || y === 0 || x === this.grid.width - 1 || y === this.grid.height - 1) { //can't edit outer walls
+    return;
+  }
   var position = new Vector(x, y);
   var element = elementFromChar(this.legend, character);
 
@@ -439,35 +442,35 @@ $(document).ready(function() {
   $("#speed").on("input", function() {
     var speedString;
     switch ($(this).val()) {
-      case "100":
-        speedString = "greased";
-        break;
-      case "200":
-        speedString = "zippy";
-        break;
-      case "300":
-        speedString = "brisk";
-        break;
-      case "400":
-        speedString = "walking";
-        break;
-      case "500":
-        speedString = "calm";
-        break;
-      case "600":
-        speedString = "tired";
-        break;
-      case "700":
-        speedString = "lethargic";
-        break;
-      case "800":
-        speedString = "sleepwalking";
+      case "1000":
+        speedString = "FAST!!!";
         break;
       case "900":
-        speedString = "painful";
+        speedString = "FAST!";
         break;
-      case "1000":
-        speedString = "excruciating";
+      case "800":
+        speedString = "fast!";
+        break;
+      case "700":
+        speedString = "fast";
+        break;
+      case "600":
+        speedString = "normal";
+        break;
+      case "500":
+        speedString = "slow";
+        break;
+      case "400":
+        speedString = "sloow";
+        break;
+      case "300":
+        speedString = "slooow";
+        break;
+      case "200":
+        speedString = "sloooow";
+        break;
+      case "100":
+        speedString = "zzz...";
         break;
     }
     $("#speed-label").text("Speed: " + speedString);
