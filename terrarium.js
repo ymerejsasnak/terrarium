@@ -434,9 +434,11 @@ $(document).ready(function() {
 
   animateWorld(world);
 
-  //start-stop and speed handlers are in animateworld function -- can i get it out and put it here??
+  //start-stop handler is in animateworld function -- can i get it out and put it here??
 
-
+  $("#speed").on("input", function() {
+    $("#start-stop").trigger("click", true);
+  });
 
   $("#clear").on("click", function() {
     world.clearWorld();
@@ -455,7 +457,7 @@ $(document).ready(function() {
   });
 
   $("#reset").on("click", function() { 
-    $("#start-stop").trigger("click", [true]); 
+    $("#start-stop").trigger("click", true);
     world.resetWorld(defaultWorld, legend);
     world.drawDivs();
   });

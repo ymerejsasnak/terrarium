@@ -12,9 +12,9 @@ next to implement:<br><br>
 
 -fix clear and edit functions so outer wall cannot be removed (errors possible if it's not there)<br>
 
--allow speed selector<br>
+-work on speed selector<br>
 
--adjust editing so it can use mousedown to 'paint' cells in rather than one at a time<br>
+-adjust editing so it can use mousedown to 'paint' cells in rather than one at a time (and use preventdefault to not select page elements)<br>
 
 -world randomizer with various options<br>
 
@@ -25,6 +25,7 @@ ideas: virus-turns other lifeforms into virii<br>
         competing herbivores/carnivores<br>
         vine - plant that hugs walls(use wall follower movement code)<br>
         carnivorous plant - doesn't move, but eats anything that ends up next to it<br>
+        evolver - starts as plant, becomes herbivore at certain level, then carnivore, then splits into two baby evolvers<br>
 
 --add way to save layout???? (with localstorage or later w/ rails or node?)<br><br>
 

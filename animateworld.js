@@ -20,40 +20,31 @@
     active = this;
 
 
-    $("#start-stop").on("click", function(event, reset) { 
-      self.clicked(reset);
+    $("#start-stop").on("click", function(event, fromOtherButton) { 
+      self.clicked(fromOtherButton, $("#speed").val());
     });
 
-    $("#speed").on("input", function() {
-       self.speedChange($(this).val());
-    });
+    
 
   }
 
-  Animated.prototype.clicked = function(reset) {
+  Animated.prototype.clicked = function(fromOtherButton, speed) {
     if (this.disabled) return;
     if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;
       $("#start-stop").text("START");
     } else {
-      if (reset) { //if reset is true it means the reset button triggered this so don't start it
+      if (fromOtherButton) { //reset button and speed slider will stop animation but not start it
         return;
       }
       var self = this;
-      this.interval = setInterval(function() { self.tick(); }, 333);
+      this.interval = setInterval(function() { self.tick(); }, speed);
       $("#start-stop").text("STOP");
     }
   };
 
-  Animated.prototype.speedChange = function(speed) {
-    var self = this;
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
-    this.interval = setInterval(function() { self.tick(); }, speed);
-  }
-
+ 
   Animated.prototype.tick = function() {
     this.world.turn();
     this.world.drawDivs();
