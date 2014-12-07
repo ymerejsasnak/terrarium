@@ -152,11 +152,12 @@ World.prototype.editCell = function(cell, character) {
   var element = elementFromChar(this.legend, character);
 
   //turn to empty cell if it's already the selected type
-  if (element && this.grid.get(position) && this.grid.get(position).originChar === element.originChar) { 
+  if (element && this.grid.get(position) && this.grid.get(position).originChar === element.originChar) {
     this.grid.set(position, null);
   } else {
     this.grid.set(position, element);
   }
+  
 }
 
 
@@ -339,9 +340,9 @@ PlantEater.prototype.act = function(context) {
 function SmartPlantEater() {
   this.energy = 20;
   this.direction = randomElement(directionNames);
-  this.color = "rgb(" + (180 - Math.floor(this.energy * 2)) + 
-                  "," + (180 - Math.floor(this.energy * 2)) + 
-                  "," + (180 - Math.floor(this.energy * 2)) + ")";
+  this.color = "rgb(" + (Math.floor(this.energy * 3)) + 
+                  "," + (Math.floor(this.energy * 3)) + 
+                  "," + (Math.floor(this.energy * 3)) + ")";
 }
 SmartPlantEater.prototype.act = function(context) {
   var space = context.find(" ");
@@ -351,9 +352,9 @@ SmartPlantEater.prototype.act = function(context) {
   var plant = context.find("*");
   if (plant && this.energy < 70 &&     //checks if energy levels are below a certain level (only eats when hungry)
         context.findAll("*").length > 1) { //won't eat plant if it's the only one in its view range (to not kill them all off)
-    this.color = "rgb(" + (180 - Math.floor(this.energy * 2)) + 
-                  "," + (180 - Math.floor(this.energy * 2)) + 
-                  "," + (180 - Math.floor(this.energy * 2)) + ")";
+    this.color = "rgb(" + (Math.floor(this.energy * 3)) + 
+                  "," + (Math.floor(this.energy * 3)) + 
+                  "," + (Math.floor(this.energy * 3)) + ")";
     return {type: "eat", direction: plant};
   }
   if (context.look(this.direction) != " " && space) { //goes in straight line until hits something
@@ -477,22 +478,25 @@ $(document).ready(function() {
     $("#start-stop").trigger("click", true);
   });
 
+
   $("#clear").on("click", function() {
     world.clearWorld();
     world.drawDivs();
   });
   
+
   var selectedElement = " ";  
 
   $("#edit-menu").on("change", function() {
     selectedElement = $(this).val();
   });
 
-  $(".cell").on("click", function() {
+  $("#container").on("click", ".cell", function() {
     world.editCell($(this), selectedElement);
     world.drawDivs();
   });
 
+   
   $("#reset").on("click", function() { 
     $("#start-stop").trigger("click", true);
     world.resetWorld(defaultWorld, legend);

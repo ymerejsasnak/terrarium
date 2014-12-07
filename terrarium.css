@@ -64,6 +64,11 @@ button:active {
   background: radial-gradient(#BEF0AD, #A9E8AE);
   float: left;
   cursor: default;
+
+  -moz-user-select: none; 
+  -khtml-user-select: none; 
+  -webkit-user-select: none; 
+  -o-user-select: none; 
 }
 
 .wall1 {

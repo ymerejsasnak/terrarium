@@ -9,11 +9,6 @@ basic program from following the chapter and added exercises are done<br><br><br
 next to implement:<br><br>
 
 
-
--fix clear and edit functions so outer wall cannot be removed (errors possible if it's not there)<br>
-
--adjust editing so it can use mousedown to 'paint' cells in rather than one at a time (and use preventdefault to not select page elements)<br>
-
 -world randomizer with various options<br>
 
 --clean up and organize code better!  maybe split into more files, etc<br>
