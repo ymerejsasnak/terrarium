@@ -18,6 +18,7 @@ ideas: virus-turns other lifeforms into virii<br>
         competing herbivores/carnivores<br>
         carnivorous plant - doesn't move, but eats anything that ends up next to it<br>
         evolver - starts as plant, becomes herbivore at certain level, then carnivore, then splits into two baby evolvers<br>
+        conway rule cell<br>
 
 --add way to save layout???? (with localstorage or later w/ rails or node?)<br><br>
 

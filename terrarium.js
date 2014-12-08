@@ -341,16 +341,16 @@ Plant.prototype.act = function(context) {
 
 
 function Vine() { //wall hugging plant()
-  this.energy = 5 + Math.random() * 5;
+  this.energy = 2 + Math.random() * 2;
   this.direction = randomElement(directionNames);
   this.color = "rgb(0," + Math.floor(this.energy * 10) + ",99)";
 }
 Vine.prototype.act = function(context) {
-  if (this.energy > 10) {
+  if (this.energy > 5) {
     var start = this.direction;
     //reproduces in more line-like patterns
-    if (context.look(this.direction) === " " && context.look(dirPlus(this.direction, 4)) === "~" ||
-        context.findAll("~").length === 0) { 
+    if (context.look(this.direction) === " " && context.look(dirPlus(this.direction, 4)) === "~" &&
+        context.findAll("~").length < 5 || context.findAll("~").length === 0) { 
       return {type: "reproduce", direction: this.direction};
     } else {
       this.direction = randomElement(directionNames);
@@ -364,17 +364,6 @@ Vine.prototype.act = function(context) {
   }
 }
 
-/*
-var start = this.direction;
-  if (view.look(dirPlus(this.direction, -3)) != " ") {
-    start = this.direction = dirPlus(this.direction, -2);
-  }
-  while (view.look(this.direction) != " ") {
-    this.direction = dirPlus(this.direction, 1);
-    if (this.direction === start) {
-      break;
-    }
-  }*/
 
 
 
