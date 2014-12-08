@@ -213,7 +213,7 @@ actionTypes.grow = function(critter) {
 actionTypes.move = function(critter, vector, action) {
   var dest = this.checkDestination(action, vector);
   if (dest === null || critter.energy <= 1 || this.grid.get(dest) != null) {
-    critter.energy -= 0.1; //still loses a little energy each turn even if not moving
+    critter.energy -= 0.1; //still loses a little energy each turn even if not moving (carnivores stuck in plants may die)
     return false;
   }
   critter.energy -= 1;
@@ -507,7 +507,7 @@ Virus.prototype.act = function(context) {
     return {type: "infect", direction: vine};
   }
     
-  var space = context.find(" ");
+  var space = context.find(" "); //random movement
   if (space) {
     return {type: "move", direction: space};
   }

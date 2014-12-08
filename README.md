@@ -12,7 +12,7 @@ TO DO:<br><br>
 
 --add way to save/load layout with localstorage (save in json?)<br>
 
---improve look of controls<br>
+--improve UI<br>
 
 --add instructions and visual legend (popup div)<br><br>
 
