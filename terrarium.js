@@ -88,7 +88,7 @@ World.prototype.drawDivs = function() {
       var id = "#pos-" + x + "-" + y;
       var div = $(id);
 
-      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus conway flytrap evolver1 evolver2 evolver3");
+      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus flytrap evolver1 evolver2 evolver3");
       
 
       switch (character) {
@@ -147,11 +147,6 @@ World.prototype.drawDivs = function() {
       case "3":
       div.addClass("evolver3");
         div.text("\u0434"); //like carnivore
-        div.css("color", element.color);
-        break;
-      case "C":
-        div.addClass("conway");
-        div.text("=");
         div.css("color", element.color);
         break;
       }
@@ -663,24 +658,6 @@ EvolverCarnivore.prototype.act = function(context) {
   
 
   
-function ConwayCell() { //doesn't interact with other elements other than blocking them...just spreads around and looks cool
-  this.energy = 1;
-  var grayness = Math.floor(Math.random() * 255);
-  this.color = "rgb(" + grayness + "," + grayness + "," + grayness + ")";
-}
-ConwayCell.prototype.act = function(context) {
-  var neighbors = context.findAll("C");
-  if (neighbors.length < 2 || neighbors.length > 3) {
-    this.energy = 0;
-    return;
-  }
-  //can't implement this properly unless I make empty cells check for conway cells and turn into it if rule applies....so random:
-  var space = context.find(" ");
-  if (space) {
-    this.energy = 3;
-    return {type: "reproduce", direction: space};
-  } 
-}
 
 
 
