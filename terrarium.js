@@ -161,8 +161,17 @@ World.prototype.editCell = function(cell, character) {
   } else {
     this.grid.set(position, element);
   }
-  
 }
+World.prototype.randomize = function(character) {
+  for (var y = 1; y < this.grid.height - 1; y++) {
+    for (var x = 1; x < this.grid.width - 1; x++) {
+      if (Math.floor(Math.random() * 200) === 0) {  //.5% chance good?
+        this.grid.set(new Vector(x, y), elementFromChar(this.legend, character));
+      }
+    }
+  }
+}
+
 
 
 function LifelikeWorld(map, legend) {
@@ -353,7 +362,7 @@ Vine.prototype.act = function(context) {
         context.findAll("~").length < 5 || context.findAll("~").length === 0) { 
       return {type: "reproduce", direction: this.direction};
     } else {
-      this.direction = randomElement(directionNames);
+      this.direction = dirPlus(this.direction, 1);
     }
     
   }
@@ -553,6 +562,10 @@ $(document).ready(function() {
     world.drawDivs();
   });
 
+  $("#random").on("click", function() {
+    world.randomize(selectedElement);
+    world.drawDivs();
+  });
    
   $("#reset").on("click", function() { 
     $("#start-stop").trigger("click", true);

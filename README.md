@@ -9,8 +9,6 @@ basic program from following the chapter and added exercises are done<br><br><br
 next to implement:<br><br>
 
 
--world randomizer with various options<br>
-
 --clean up and organize code better!  maybe split into more files, etc<br>
 
 --add more lifeforms? (maybe have to introduce critter 'class' or 'type')<br>
