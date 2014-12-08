@@ -346,22 +346,35 @@ function Vine() { //wall hugging plant()
   this.color = "rgb(0," + Math.floor(this.energy * 10) + ",99)";
 }
 Vine.prototype.act = function(context) {
-  if (this.energy > 15) {
+  if (this.energy > 10) {
     var start = this.direction;
-    if (context.look(this.direction) === " " && context.findAll("~").length <= 2) { //reproduces in more line-link patterns
+    //reproduces in more line-like patterns
+    if (context.look(this.direction) === " " && context.look(dirPlus(this.direction, 4)) === "~" ||
+        context.findAll("~").length === 0) { 
       return {type: "reproduce", direction: this.direction};
     } else {
       this.direction = randomElement(directionNames);
     }
     
   }
-  if (this.energy < 20) {
+  if (this.energy < 15) {
 
     this.color = "rgb(0," + Math.floor(this.energy * 10) + ",99)";
     return {type: "grow"};
   }
 }
 
+/*
+var start = this.direction;
+  if (view.look(dirPlus(this.direction, -3)) != " ") {
+    start = this.direction = dirPlus(this.direction, -2);
+  }
+  while (view.look(this.direction) != " ") {
+    this.direction = dirPlus(this.direction, 1);
+    if (this.direction === start) {
+      break;
+    }
+  }*/
 
 
 
