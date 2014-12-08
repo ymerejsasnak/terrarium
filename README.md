@@ -1,24 +1,24 @@
 terrarium
 =========
 
-Eloquent Javascript - terrarium project<br><br>
-
-basic program from following the chapter and added exercises are done<br><br><br>
-
-
-next to implement:<br><br>
+Unrealistic Life Simulator<br>
+(expanded from the "electronic life" project from Eloquent Javascript)<br><br><br>
 
 
---clean up and organize code better!  maybe split into more files, etc<br>
+TO DO:<br><br>
 
---add more lifeforms? (maybe have to introduce critter 'class' or 'type')<br>
+
+--clean up, organize code better, refactor, maybe split into more files, etc<br>
+
+--add way to save layout with localstorage (save in json?)<br>
+
+--improve look of controls<br>
+
+--add instructions and visual legend (popup div)<br><br>
+
+--add more lifeforms (maybe have to introduce critter 'class' or 'type')<br>
 ideas: virus-turns other lifeforms into virii<br>
         competing herbivores/carnivores<br>
         carnivorous plant - doesn't move, but eats anything that ends up next to it<br>
         evolver - starts as plant, becomes herbivore at certain level, then carnivore, then splits into two baby evolvers<br>
         conway rule cell<br>
-
---add way to save layout???? (with localstorage or later w/ rails or node?)<br><br>
-
---add ability to edit lifeform properties on page?<br>
-
