@@ -88,7 +88,7 @@ World.prototype.drawDivs = function() {
       var id = "#pos-" + x + "-" + y;
       var div = $(id);
 
-      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus");
+      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus conway");
       
 
       switch (character) {
@@ -127,6 +127,11 @@ World.prototype.drawDivs = function() {
       case "x":
         div.addClass("virus");
         div.text(character);
+        div.css("color", element.color);
+        break;
+      case "C":
+        div.addClass("conway");
+        div.text("=");
         div.css("color", element.color);
         break;
       }
@@ -239,7 +244,7 @@ actionTypes.reproduce = function(critter, vector, action) {
   return true;
 }
 
-actionTypes.replicate = function(critter, vector, action) {
+actionTypes.infect = function(critter, vector, action) {
   var baby = elementFromChar(this.legend, critter.originChar);
   var dest = this.checkDestination(action, vector);
   //baby energy not subtracted, just straight value
@@ -490,22 +495,46 @@ Virus.prototype.act = function(context) {
   var carnivore = context.find("@");
   //attacks top of food chain first...energy level doesn't matter
   if (carnivore) {
-    return {type: "replicate", direction: carnivore};
+    return {type: "infect", direction: carnivore};
   }
   if (herbivore) {
-    return {type: "replicate", direction: herbivore};
+    return {type: "infect", direction: herbivore};
   }
   if (plant) {
-    return {type: "replicate", direction: plant};
+    return {type: "infect", direction: plant};
   }
   if (vine) {
-    return {type: "replicate", direction: vine};
+    return {type: "infect", direction: vine};
   }
     
   var space = context.find(" ");
   if (space) {
     return {type: "move", direction: space};
   }
+}
+
+
+function ConwayCell() { //doesn't interact with other elements other than blocking them...just spreads around and looks cool
+  this.energy = 1;
+  this.color = "rgb(" + Math.floor(Math.random() * 255) + "," +
+                        Math.floor(Math.random() * 255) + "," +
+                        Math.floor(Math.random() * 255) + ")";
+}
+ConwayCell.prototype.act = function(context) {
+  var neighbors = context.findAll("C");
+  if (neighbors.length < 2 || neighbors.length > 3) {
+    this.energy = 0;
+    return;
+  }
+  this.color = "rgb(" + Math.floor(Math.random() * 255) + "," +
+                        Math.floor(Math.random() * 255) + "," +
+                        Math.floor(Math.random() * 255) + ")";
+  //can't implement this properly unless I make other entities check for conway cell and turn into it if rule applies....so random:
+  var space = context.find(" ");
+  if (space) {
+    this.energy = 3;
+    return {type: "reproduce", direction: space};
+  } 
 }
 
 
@@ -545,7 +574,8 @@ var legend = {"#": Wall,
               "O": SmartPlantEater,
               "*": Plant,
               "~": Vine,
-              "x": Virus};
+              "x": Virus,
+              "C": ConwayCell};
 
 var world = new LifelikeWorld(defaultWorld, legend);
 
