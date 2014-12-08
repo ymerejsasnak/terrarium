@@ -469,7 +469,7 @@ SmartPlantEater.prototype.act = function(context) {
 }
 
 
-function Tiger() { //!!!!need to add code so it will eat herbivore evolver too!!!!!!!!!!!!!!!!!!!
+function Tiger() { 
   this.energy = 100;
   this.direction = randomElement(directionNames);
   this.preySeen = []; //works as queue
@@ -481,7 +481,7 @@ Tiger.prototype.act = function(context) {
   var seenPerTurn = this.preySeen.reduce(function(a, b) {
     return a + b;
   }, 0) / this.preySeen.length;
-  var prey = context.findAll("O");
+  var prey = context.findAll("O").concat(context.findAll("2"));
   this.preySeen.push(prey.length);
   // Drop the first element from the array when it is longer than 6
   if (this.preySeen.length > 6) {
