@@ -11,12 +11,13 @@ TO DO:<br><br>
 --clean up, organize code better, refactor, maybe split into more files, etc<br>
 
 --add way to save/load layout with localstorage (save in json?)<br>
+--preset level ideas:  existing default world ('circle of life?'), "rabbits in the swamp" (vines, flytraps, herbivores),
+                       "sprial of death" (walls in spiral shape FILLED with carnivores, with one virus at the end (visual fun));
 
 --improve UI<br>
 
 --add instructions and visual legend (popup div)<br><br>
 
---add more lifeforms (maybe have to introduce critter 'class' or 'type')<br>
-ideas:  carnivorous plant - doesn't move, but eats anything (just animals?) that ends up next to it<br>
-        evolver - starts as plant, becomes herbivore, then carnivore, then splits into two baby evolvers (in code, parent will just revert 'form' property back to plant rather than MAKING 2 babies)<br>
+--lifeform notes:  should evolvers be allowed to eat their own kind if its a lesser form?<br>
+                  tweak stats on everything if necessary
         

@@ -88,7 +88,7 @@ World.prototype.drawDivs = function() {
       var id = "#pos-" + x + "-" + y;
       var div = $(id);
 
-      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus conway flytrap");
+      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus conway flytrap evolver1 evolver2 evolver3");
       
 
       switch (character) {
@@ -132,6 +132,21 @@ World.prototype.drawDivs = function() {
       case "V":
         div.addClass("flytrap");
         div.text(character);
+        div.css("color", element.color);
+        break;
+      case "1":
+        div.addClass("evolver1");
+        div.text("\u00A5"); //like plant
+        div.css("color", element.color);
+        break;
+      case "2":
+        div.addClass("evolver2");
+        div.text("\u0264"); //like herbivore
+        div.css("color", element.color);
+        break;
+      case "3":
+      div.addClass("evolver3");
+        div.text("\u0434"); //like carnivore
         div.css("color", element.color);
         break;
       case "C":
@@ -244,7 +259,11 @@ actionTypes.eat = function(critter, vector, action) {
 }
 
 actionTypes.reproduce = function(critter, vector, action) {
-  var baby = elementFromChar(this.legend, critter.originChar);
+  var character = critter.originChar;
+  if (critter.originChar === "3") { //evolver3 makes evolver1
+    character = "1"
+  } 
+  var baby = elementFromChar(this.legend, character);
   var dest = this.checkDestination(action, vector);
   if (dest === null || critter.energy <= 2 * baby.energy || this.grid.get(dest) != null) {
     return false;
@@ -263,6 +282,16 @@ actionTypes.infect = function(critter, vector, action) {
   return true;
 }
 
+actionTypes.evolve = function(critter, vector, action) {
+  var form = critter.originChar;
+  if (form === "1") {
+    form = "2";
+  } else if (form === "2") {
+    form = "3";
+  }
+  this.grid.set(vector, elementFromChar(this.legend, form));
+  return true;
+}
 
 
 
@@ -408,28 +437,6 @@ Vine.prototype.act = function(context) {
 }
 
 
-
-
-
-
-function PlantEater() {//currently not used
-  this.energy = 20;
-}
-PlantEater.prototype.act = function(context) {
-  var space = context.find(" ");
-  if (this.energy > 60 && space) {
-    return {type: "reproduce", direction: space};
-  }
-  var plant = context.find("*") ;  //plant symbol...put these into an object or something later
-  if (plant) {
-    return {type: "eat", direction: plant};
-  }
-  if (space) {
-    return {type: "move", direction: space};
-  }
-}
-
-
 function SmartPlantEater() {
   this.energy = 20;
   this.direction = randomElement(directionNames);
@@ -456,6 +463,10 @@ SmartPlantEater.prototype.act = function(context) {
   if (plant && this.energy < 60 && context.findAll("~").length > 1) {
     return {type: "eat", direction: plant};  
   }
+  var evolverPlant = context.find("1"); //lastly will eat an evolvers in plant form
+  if (evolverPlant && this.energy < 60 && context.findAll("1").length > 1) {
+    return {type: "eat", direction: evolverPlant};  
+  }
   if (context.look(this.direction) != " " && space) { //goes in straight line until hits something
     this.direction = space;
   }
@@ -463,7 +474,7 @@ SmartPlantEater.prototype.act = function(context) {
 }
 
 
-function Tiger() {
+function Tiger() { //!!!!need to add code so it will eat herbivore evolver too!!!!!!!!!!!!!!!!!!!
   this.energy = 100;
   this.direction = randomElement(directionNames);
   this.preySeen = []; //works as queue
@@ -526,7 +537,19 @@ Virus.prototype.act = function(context) {
   if (vine) {
     return {type: "infect", direction: vine};
   }
-    
+  var evolver1 = context.find("1");
+  if (evolver1) {
+    return {type: "infect", direction: evolver1}
+  }
+  var evolver2 = context.find("2");
+  if (evolver2) {
+    return {type: "infect", direction: evolver2}
+  }
+  var evolver3 = context.find("3");
+  if (evolver3) {
+    return {type: "infect", direction: evolver3}
+  }
+
   var space = context.find(" "); //random movement
   if (space) {
     return {type: "move", direction: space};
@@ -544,13 +567,21 @@ Flytrap.prototype.act = function(context) {
   }
 
   this.color =  "rgb(" + Math.floor(this.energy * 2 + 50) + "," + Math.floor(this.energy * 5 + 50) + ", 50";
+  var herbivore = context.find("O");
+  if (herbivore) {
+    return {type: "eat", direction: herbivore};
+  }
+  var evolver2 = context.find("2");
+  if (evolver2) {
+    return {type: "eat", direction: evolver2};
+  }
   var carnivore = context.find("@");
   if (carnivore) {
     return {type: "eat", direction: carnivore};
   }
-  var herbivore = context.find("O");
-  if (herbivore) {
-    return {type: "eat", direction: herbivore};
+  var evolver3 = context.find("3");
+  if (evolver3) {
+    return {type: "eat", direction: evolver3};
   }
   var space = context.find(" ");
   if (space && this.energy > 30) {
@@ -559,7 +590,79 @@ Flytrap.prototype.act = function(context) {
 }
 
 
+function EvolverPlant() {
+  this.energy = 3 + Math.random() * 3;
+  this.color = "blue";
+}
+EvolverPlant.prototype.act = function(context) {
+  if (this.energy >= 16) {
+    return {type: "evolve"};
+  }
+  if (this.energy < 16) {
+    return {type: "grow"};
+  }
+}
 
+function EvolverHerbivore() {
+  this.energy = 20;
+  this.direction = randomElement(directionNames);
+  this.color = "blue";
+}
+EvolverHerbivore.prototype.act = function(context) {
+  if (this.energy > 100) {
+    return {type: "evolve"};
+  }
+  var plant = context.find("*");
+  if (plant && this.energy < 100 && context.findAll("*").length > 1) {
+    return {type: "eat", direction: plant};
+  }
+  var plant = context.find("~"); //resorts to vines if no plants to eat
+  if (plant && this.energy < 100 && context.findAll("~").length > 1) {
+    return {type: "eat", direction: plant};  
+  }
+  var space = context.find(" ");
+  if (context.look(this.direction) != " " && space) { //goes in straight line until hits something
+    this.direction = space;
+  }
+  return {type: "move", direction: this.direction};
+}
+
+function EvolverCarnivore() {
+  this.energy = 100;
+  this.direction = randomElement(directionNames);
+  this.preySeen = []; //works as queue just like carnivore
+  this.color = "blue";
+}
+EvolverCarnivore.prototype.act = function(context) {
+  var seenPerTurn = this.preySeen.reduce(function(a, b) {
+    return a + b;
+  }, 0) / this.preySeen.length;
+  var prey = context.findAll("O");
+  this.preySeen.push(prey.length);
+  if (this.preySeen.length > 6) {
+    this.preySeen.shift();
+  }
+  if (prey.length && seenPerTurn > 0.25) {
+    return {type: "eat", direction: randomElement(prey)};
+  }
+
+  var space = context.find(" ");
+  if (this.energy > 150 && space) {
+    this.energy = 100; //cut energy when reproducing otherwise will reproduce too much
+    return {type: "reproduce", direction: space};
+  }
+  if (context.look(this.direction) != " " && space) {
+    this.direction = space;
+  }
+  return {type: "move", direction: this.direction};
+}
+
+
+
+
+  
+
+  
 function ConwayCell() { //doesn't interact with other elements other than blocking them...just spreads around and looks cool
   this.energy = 1;
   var grayness = Math.floor(Math.random() * 255);
@@ -618,7 +721,10 @@ var legend = {"#": Wall,
               "~": Vine,
               "x": Virus,
               "C": ConwayCell,
-              "V": Flytrap};
+              "V": Flytrap,
+              "1": EvolverPlant,
+              "2": EvolverHerbivore,
+              "3": EvolverCarnivore};
 
 var world = new LifelikeWorld(defaultWorld, legend);
 
