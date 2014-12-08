@@ -88,7 +88,7 @@ World.prototype.drawDivs = function() {
       var id = "#pos-" + x + "-" + y;
       var div = $(id);
 
-      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus conway");
+      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus conway flytrap");
       
 
       switch (character) {
@@ -129,6 +129,11 @@ World.prototype.drawDivs = function() {
         div.text(character);
         div.css("color", element.color);
         break;
+      case "V":
+        div.addClass("flytrap");
+        div.text(character);
+        div.css("color", element.color);
+        break;
       case "C":
         div.addClass("conway");
         div.text("=");
@@ -166,7 +171,7 @@ World.prototype.editCell = function(cell, character) {
   var position = new Vector(x, y);
   var element = elementFromChar(this.legend, character);
 
-  //turn to empty cell if it's already the selected type
+  //revert to empty cell if it's already the selected type
   if (element && this.grid.get(position) && this.grid.get(position).originChar === element.originChar) {
     this.grid.set(position, null);
   } else {
@@ -201,6 +206,11 @@ LifelikeWorld.prototype.letAct = function(critter, vector) {
     }
   }
 }
+
+
+
+
+
 
 
 var actionTypes = Object.create(null);
@@ -248,10 +258,14 @@ actionTypes.infect = function(critter, vector, action) {
   var baby = elementFromChar(this.legend, critter.originChar);
   var dest = this.checkDestination(action, vector);
   //baby energy not subtracted, just straight value
-  critter.energy -= 5;
+  critter.energy -= 1;
   this.grid.set(dest, baby);
   return true;
 }
+
+
+
+
 
 
 function elementFromChar(legend, ch) {
@@ -456,6 +470,7 @@ function Tiger() {
   this.color = "rgb(" + Math.floor(this.energy / 2 + 50) + "," + Math.floor(this.energy / 4) + ", 0";
 }
 Tiger.prototype.act = function(context) {
+  this.color = "rgb(" + Math.floor(this.energy / 2 + 50) + "," + Math.floor(this.energy / 4) + ", 0";
   // Average number of prey seen per turn
   var seenPerTurn = this.preySeen.reduce(function(a, b) {
     return a + b;
@@ -468,7 +483,7 @@ Tiger.prototype.act = function(context) {
   }
   // Only eat if the predator saw more than ¼ prey animal per turn
   if (prey.length && seenPerTurn > 0.25) {
-    this.color = "rgb(" + Math.floor(this.energy / 2 + 50) + "," + Math.floor(this.energy / 4) + ", 0";
+    
     return {type: "eat", direction: randomElement(prey)};
   }
  
@@ -484,25 +499,30 @@ Tiger.prototype.act = function(context) {
 
 
 function Virus() {
-  this.energy = 10;
+  this.energy = 2;
   this.direction = randomElement(directionNames);
   this.color = "rgb(0,0,0)";
 }
 Virus.prototype.act = function(context) {
-  var plant = context.find("*");
-  var vine = context.find("~");
-  var herbivore = context.find("O");
-  var carnivore = context.find("@");
+  
   //attacks top of food chain first...energy level doesn't matter
+  var carnivore = context.find("@");
   if (carnivore) {
     return {type: "infect", direction: carnivore};
   }
+  var herbivore = context.find("O");
   if (herbivore) {
     return {type: "infect", direction: herbivore};
   }
+  var flytrap = context.find("V");
+  if (flytrap) {
+    return {type: "infect", direction: flytrap};
+  }
+  var plant = context.find("*");
   if (plant) {
     return {type: "infect", direction: plant};
   }
+  var vine = context.find("~");
   if (vine) {
     return {type: "infect", direction: vine};
   }
@@ -514,11 +534,36 @@ Virus.prototype.act = function(context) {
 }
 
 
+function Flytrap() { //carnivorous plant, doesn't move, eats animals to grow/reproduce
+  this.energy = Math.random() * 10 + 10;
+  this.color = "rgb(" + Math.floor(this.energy * 2 + 50) + "," + Math.floor(this.energy * 5 + 50) + ", 50";
+}
+Flytrap.prototype.act = function(context) {
+  if (this.energy > 40){
+    this.energy = 40; //reset energy so it doesn't reproduce too much when eating animals with lots of energy;
+  }
+
+  this.color =  "rgb(" + Math.floor(this.energy * 2 + 50) + "," + Math.floor(this.energy * 5 + 50) + ", 50";
+  var carnivore = context.find("@");
+  if (carnivore) {
+    return {type: "eat", direction: carnivore};
+  }
+  var herbivore = context.find("O");
+  if (herbivore) {
+    return {type: "eat", direction: herbivore};
+  }
+  var space = context.find(" ");
+  if (space && this.energy > 30) {
+    return {type: "reproduce", direction: space};
+  }
+}
+
+
+
 function ConwayCell() { //doesn't interact with other elements other than blocking them...just spreads around and looks cool
   this.energy = 1;
-  this.color = "rgb(" + Math.floor(Math.random() * 255) + "," +
-                        Math.floor(Math.random() * 255) + "," +
-                        Math.floor(Math.random() * 255) + ")";
+  var grayness = Math.floor(Math.random() * 255);
+  this.color = "rgb(" + grayness + "," + grayness + "," + grayness + ")";
 }
 ConwayCell.prototype.act = function(context) {
   var neighbors = context.findAll("C");
@@ -526,10 +571,7 @@ ConwayCell.prototype.act = function(context) {
     this.energy = 0;
     return;
   }
-  this.color = "rgb(" + Math.floor(Math.random() * 255) + "," +
-                        Math.floor(Math.random() * 255) + "," +
-                        Math.floor(Math.random() * 255) + ")";
-  //can't implement this properly unless I make other entities check for conway cell and turn into it if rule applies....so random:
+  //can't implement this properly unless I make empty cells check for conway cells and turn into it if rule applies....so random:
   var space = context.find(" ");
   if (space) {
     this.energy = 3;
@@ -549,7 +591,7 @@ ConwayCell.prototype.act = function(context) {
 
 
 
-var defaultWorld = 
+var defaultWorld =  //fairly balanced world that only uses 3 of the lifeforms
   ["##############################################################",
    "#  @             ###   ####            ##****              ###",
    "#   *     ##                           ##    ##       OO    ##",
@@ -575,7 +617,8 @@ var legend = {"#": Wall,
               "*": Plant,
               "~": Vine,
               "x": Virus,
-              "C": ConwayCell};
+              "C": ConwayCell,
+              "V": Flytrap};
 
 var world = new LifelikeWorld(defaultWorld, legend);
 
