@@ -29,10 +29,11 @@
 
     <button id="clear">CLEAR</button>
 
-    <label for="edit-menu">Add Entity:</label>
+    <label id="edit-label" for="edit-menu">Add Entity:</label>
     <select id="edit-menu" autocomplete="off">
       <option value=" " selected>empty cell</option>
       <option value="#">wall</option>
+      <option disabled>---</option>
       <option value="*">plant</option>
       <option value="~">vine</option>
       <option value="V">flytrap</option>
@@ -46,7 +47,14 @@
     
     <span class="separator"> | </span>
 
-    <button id="reset">RESET</button>
+    <button id="save">SAVE</button>
+    <button id="load">LOAD</button>
+    <button id="reset">DEFAULT</button>
+
+    <span class="separator"> | </span>
+
+    <button id="help">HELP</button>
+
     
   </div>
 

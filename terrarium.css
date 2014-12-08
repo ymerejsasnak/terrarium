@@ -14,20 +14,24 @@ body {
 }
 
 #controls {
-  width: 94%;
+  width: 93%;
   height: 9%;
   margin-left: 2.5%;
+  padding-left: 1%;
   background: linear-gradient(#EEE, #DDD);
   border: 1px solid black;
 }
 
 button {
-  width: 7%;
+  width: 6%;
   height: 50%;
   border: 1px solid black;
-  margin: 1.3%;
+  border-radius: 15%;
+  margin-left: .4%;
+  margin-right: .4%;
+  margin-top: 1.3%;
   box-shadow: 2px 2px 4px black;
-  font-size: 3vmin;
+  font-size: 2vmin;
 }
 
 button:hover {
@@ -41,6 +45,18 @@ button:active {
 #speed-label {
   display: inline-block;
   width: 10%;
+  margin-left: .6%;
+}
+
+#speed {
+  position: relative;
+  top: 11%;
+  width: 10%;
+
+}
+
+#edit-label {
+  margin-left: .6%;
 }
 
 #edit-menu {
@@ -48,12 +64,19 @@ button:active {
   margin-left: .2%;
 }
 
+#random {
+  margin-right: .8%;
+}
+
 .separator {
   color: darkgray;
   font-size: 2em;
-  margin: 2%;
+  margin: .4%;
 }
 
+#help {
+  margin-left: .1%;
+}
 
 
 

@@ -131,7 +131,7 @@ World.prototype.drawDivs = function() {
         break;
       case "V":
         div.addClass("flytrap");
-        div.text(character);
+        div.text("v");
         div.css("color", element.color);
         break;
       case "1":
