@@ -88,7 +88,7 @@ World.prototype.drawDivs = function() {
       var id = "#pos-" + x + "-" + y;
       var div = $(id);
 
-      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger");
+      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus");
       
 
       switch (character) {
@@ -123,6 +123,12 @@ World.prototype.drawDivs = function() {
         div.addClass("vine");
         div.text(character);
         div.css("color", element.color);
+        break;
+      case "x":
+        div.addClass("virus");
+        div.text(character);
+        div.css("color", element.color);
+        break;
       }
     }
   }
@@ -229,6 +235,15 @@ actionTypes.reproduce = function(critter, vector, action) {
     return false;
   }
   critter.energy -= 2 * baby.energy;
+  this.grid.set(dest, baby);
+  return true;
+}
+
+actionTypes.replicate = function(critter, vector, action) {
+  var baby = elementFromChar(this.legend, critter.originChar);
+  var dest = this.checkDestination(action, vector);
+  //baby energy not subtracted, just straight value
+  critter.energy -= 5;
   this.grid.set(dest, baby);
   return true;
 }
@@ -463,6 +478,44 @@ Tiger.prototype.act = function(context) {
 }
 
 
+function Virus() {
+  this.energy = 10;
+  this.direction = randomElement(directionNames);
+  this.color = "rgb(0,0,0)";
+}
+Virus.prototype.act = function(context) {
+  var plant = context.find("*");
+  var vine = context.find("~");
+  var herbivore = context.find("O");
+  var carnivore = context.find("@");
+  //attacks top of food chain first...energy level doesn't matter
+  if (carnivore) {
+    return {type: "replicate", direction: carnivore};
+  }
+  if (herbivore) {
+    return {type: "replicate", direction: herbivore};
+  }
+  if (plant) {
+    return {type: "replicate", direction: plant};
+  }
+  if (vine) {
+    return {type: "replicate", direction: vine};
+  }
+    
+  var space = context.find(" ");
+  if (space) {
+    return {type: "move", direction: space};
+  }
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -491,7 +544,8 @@ var legend = {"#": Wall,
               "@": Tiger,
               "O": SmartPlantEater,
               "*": Plant,
-              "~": Vine};
+              "~": Vine,
+              "x": Virus};
 
 var world = new LifelikeWorld(defaultWorld, legend);
 
