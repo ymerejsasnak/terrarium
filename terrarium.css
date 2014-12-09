@@ -103,7 +103,9 @@ button:active {
   background: linear-gradient(#9E7D18, #BD992D);
 }
 
-
+.carrier {
+  text-shadow: 1px 1px 5px black;
+}
 
 
 
@@ -118,5 +120,4 @@ button:active {
   height: 70%;
   background: white;
   border: 1px solid black;
-  border-radius: 5%;
 }

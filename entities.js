@@ -157,6 +157,10 @@ Virus.prototype.act = function(context) {
   if (evolver3) {
     return {type: "infect", direction: evolver3}
   }
+  var carrier = context.find("&");
+  if (carrier) {
+    return {type: "infect", direction: carrier}
+  }
 
   var space = context.find(" "); //random movement
   if (space) {
@@ -269,3 +273,44 @@ EvolverCarnivore.prototype.act = function(context) {
   return {type: "move", direction: this.direction};
 }
 
+
+
+function Carrier() { //mostly same as carnivore but randomly spawns virus upon death
+  this.energy = 50;
+  this.direction = randomElement(directionNames);
+  this.preySeen = []; //works as queue
+  this.color = "rgb(200,150,100)";
+}
+Carrier.prototype.act = function(context) {
+  var surroundings = context.findAll("*").concat(context.findAll("~")).concat(context.findAll("V")).concat(context.findAll("O"));
+  surroundings = surroundings.concat(context.findAll("@")).concat(context.findAll("1")).concat(context.findAll("2"));
+  surroundings = surroundings.concat(context.findAll("3")).concat(context.findAll("&"));
+  if (this.energy < 10 && surroundings.length > 0) {
+    this.energy = 1;
+    return {type: "infect", direction: randomElement(surroundings)}; //puts a virus randomly next to it on death
+  }
+  // Average number of prey seen per turn
+  var seenPerTurn = this.preySeen.reduce(function(a, b) {
+    return a + b;
+  }, 0) / this.preySeen.length;
+  var prey = context.findAll("O").concat(context.findAll("2"));
+  this.preySeen.push(prey.length);
+  // Drop the first element from the array when it is longer than 6
+  if (this.preySeen.length > 6) {
+    this.preySeen.shift();
+  }
+  // Only eat if the predator saw more than ¼ prey animal per turn
+  if (prey.length && seenPerTurn > 0.25) {
+    
+    return {type: "eat", direction: randomElement(prey)};
+  }
+
+  var space = context.find(" ");
+  if (this.energy > 120 && space) {
+    return {type: "reproduce", direction: space};
+  }
+  if (context.look(this.direction) != " " && space) {
+    this.direction = space;
+  }
+  return {type: "move", direction: this.direction};
+}

@@ -76,4 +76,8 @@ $(document).ready(function() {
     $("#help").toggle();
   });
 
+  $("help").on("click", function() {
+    $(this).toggle();
+  });
+
 });

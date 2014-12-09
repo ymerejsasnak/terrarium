@@ -88,8 +88,8 @@ World.prototype.drawDivs = function() {
       var id = "#pos-" + x + "-" + y;
       var div = $(id);
 
-      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus flytrap evolver1 evolver2 evolver3");
-      
+      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus flytrap evolver1 evolver2 evolver3 carrier");
+      //probably delete the class change...only class used is wall1 and wall2
 
       switch (character) {
       case " ":
@@ -146,6 +146,11 @@ World.prototype.drawDivs = function() {
         break;
       case "3":
       div.addClass("evolver3");
+        div.text("\u0434"); //like carnivore
+        div.css("color", element.color);
+        break;
+      case "&":
+      div.addClass("carrier");
         div.text("\u0434"); //like carnivore
         div.css("color", element.color);
         break;
@@ -257,7 +262,7 @@ actionTypes.reproduce = function(critter, vector, action) {
   var character = critter.originChar;
   if (critter.originChar === "3") { //evolver3 makes evolver1
     character = "1";
-  } 
+  }
   var baby = elementFromChar(this.legend, character);
   var dest = this.checkDestination(action, vector);
   if (dest === null || critter.energy <= 2 * baby.energy || this.grid.get(dest) != null) {
@@ -269,7 +274,7 @@ actionTypes.reproduce = function(critter, vector, action) {
 }
 
 actionTypes.infect = function(critter, vector, action) {
-  var baby = elementFromChar(this.legend, critter.originChar);
+  var baby = elementFromChar(this.legend, "x");
   var dest = this.checkDestination(action, vector);
   //baby energy not subtracted, just straight value
   critter.energy -= 1;
@@ -407,7 +412,8 @@ var legend = {"#": Wall,
               "V": Flytrap,
               "1": EvolverPlant,
               "2": EvolverHerbivore,
-              "3": EvolverCarnivore};
+              "3": EvolverCarnivore,
+              "&": Carrier};
 
 var world = new LifelikeWorld(defaultWorld, legend);
 
