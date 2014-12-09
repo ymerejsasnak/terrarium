@@ -17,28 +17,19 @@ $(document).ready(function() {
         speedString = "fast!";
         break;
       case "700":
-        speedString = "fast";
-        break;
-      case "600":
         speedString = "normal";
         break;
-      case "500":
+      case "600":
         speedString = "slow";
         break;
-      case "400":
+      case "500":
         speedString = "sloow";
         break;
-      case "300":
-        speedString = "slooow";
-        break;
-      case "200":
-        speedString = "sloooow";
-        break;
-      case "100":
-        speedString = "zzz...";
+      case "400":
+        speedString = "zzzzz";
         break;
     }
-    $("#speed-label").text("Speed: " + speedString);
+    $("#speed-label").text(speedString);
     $("#start-stop").trigger("click", true);
   });
 

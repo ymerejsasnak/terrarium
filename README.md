@@ -22,9 +22,3 @@ TO DO:<br><br>
                        plant world (plant, vine, flytrap, and include evolvers);<br>
                        comparison level: split down middle by wall, exactly the same on both sides initially<br>
  
-
-
-
-
---add another button that only fills empty space
-
