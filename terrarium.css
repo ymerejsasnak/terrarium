@@ -97,14 +97,20 @@ button:active {
 
 .wall1 {
   background: linear-gradient(#BD992D, #9E7D18);
+  box-shadow: -1px -1px 10px black;
 }
 
 .wall2 {
   background: linear-gradient(#9E7D18, #BD992D);
+  box-shadow: -1px -1px 10px black;
 }
 
 .carrier {
-  text-shadow: 1px 1px 5px black;
+  text-shadow: 0 0 5px black;
+}
+
+.evolver1, .evolver2, .evolver3 {
+  text-shadow: 0 2px 4px blue;
 }
 
 
@@ -118,6 +124,7 @@ button:active {
 
  
   height: 70%;
-  background: white;
+  background: linear-gradient(#FFF, #DDF);
+  box-shadow: 5px 5px 10px black;
   border: 1px solid black;
 }
