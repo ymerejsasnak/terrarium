@@ -82,6 +82,50 @@ SmartPlantEater.prototype.act = function(context) {
 }
 
 
+
+function Turtle() { //slower herbivore, but no carnivores can eat it, and it can eat flytraps!
+  this.energy = 25;
+  this.direction = randomElement(directionNames);
+  this.color = "rgb(200," + (Math.floor(this.energy * 5)) + ",100)";
+  this.moveCount = 0;
+}
+Turtle.prototype.act = function(context) {
+  this.color = "rgb(200," + (Math.floor(this.energy * 5)) + ",100)";
+
+  var space = context.find(" ");
+  if (this.energy > 70 && space) {
+    return {type: "reproduce", direction: space};
+  }
+  //checks if energy levels are below a certain level (only eats when hungry)
+    //won't eat plant if it's the only one in its view range (to not kill them all off) 
+  var plant = context.find("*");
+  if (plant && this.energy < 60 && context.findAll("*").length > 1) {
+    return {type: "eat", direction: plant};
+  }
+  var plant = context.find("~"); //resorts to vines if no plants to eat
+  if (plant && this.energy < 60 && context.findAll("~").length > 1) {
+    return {type: "eat", direction: plant};  
+  }
+  var evolverPlant = context.find("1"); //lastly will eat an evolvers in plant form
+  if (evolverPlant && this.energy < 60 && context.findAll("1").length > 1) {
+    return {type: "eat", direction: evolverPlant};  
+  }
+  var flytrap = context.find("V");
+  if (flytrap && this.energy < 60 && context.findAll("V").length > 1) {
+    return {type: "eat", direction: flytrap};
+  }
+  
+  if (context.look(this.direction) != " " && space) {
+    this.direction = space;
+  }
+  this.moveCount += 1;
+  if (this.moveCount % 2 === 0) { //moves every 2 turns
+    return {type: "move", direction: this.direction};
+  }
+  
+}
+
+
 function Tiger() { 
   this.energy = 100;
   this.direction = randomElement(directionNames);
@@ -160,6 +204,10 @@ Virus.prototype.act = function(context) {
   var carrier = context.find("&");
   if (carrier) {
     return {type: "infect", direction: carrier}
+  }
+  var turtle = context.find("T");
+  if (turtle) {
+    return {type: "infect", direction: turtle}
   }
 
   var space = context.find(" "); //random movement
@@ -284,7 +332,7 @@ function Carrier() { //mostly same as carnivore but randomly spawns virus upon d
 Carrier.prototype.act = function(context) {
   var surroundings = context.findAll("*").concat(context.findAll("~")).concat(context.findAll("V")).concat(context.findAll("O"));
   surroundings = surroundings.concat(context.findAll("@")).concat(context.findAll("1")).concat(context.findAll("2"));
-  surroundings = surroundings.concat(context.findAll("3")).concat(context.findAll("&"));
+  surroundings = surroundings.concat(context.findAll("3")).concat(context.findAll("&")).concat(context.findAll("T"));
   if (this.energy < 10 && surroundings.length > 0) {
     this.energy = 1;
     return {type: "infect", direction: randomElement(surroundings)}; //puts a virus randomly next to it on death

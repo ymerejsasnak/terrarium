@@ -89,9 +89,8 @@ World.prototype.drawDivs = function() {
       var id = "#pos-" + x + "-" + y;
       var div = $(id);
 
-      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus flytrap evolver1 evolver2 evolver3 carrier");
-      //probably delete the class change...only class used is wall1 and wall2
-
+      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus flytrap evolver1 evolver2 evolver3 carrier turtle");
+      
       switch (character) {
       case " ":
         div.addClass("empty");
@@ -155,6 +154,10 @@ World.prototype.drawDivs = function() {
         div.text("\u0434"); //like carnivore
         div.css("color", element.color);
         break;
+      case "T":
+        div.addClass("turtle");
+        div.text("o");
+        div.css("color", element.color);
       }
     }
   }
@@ -414,7 +417,8 @@ var legend = {"#": Wall,
               "1": EvolverPlant,
               "2": EvolverHerbivore,
               "3": EvolverCarnivore,
-              "&": Carrier};
+              "&": Carrier,
+              "T": Turtle};
 
 var world = new LifelikeWorld(defaultWorld, legend);
 
