@@ -77,6 +77,7 @@ World.prototype.createDivs = function() {
       for (var x = 0; x < world.grid.width; x++) {
         var id = "pos-" + x + "-" + y;
         $("#container").append("<div class='cell' id=" + id + "></div>");
+        $("#" + id).css("z-index", 2000 - (x + world.grid.width * y)); //decreasing z-indexes so shadows show a bit better
       }
     }
 }
