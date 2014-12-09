@@ -89,7 +89,8 @@ World.prototype.drawDivs = function() {
       var id = "#pos-" + x + "-" + y;
       var div = $(id);
 
-      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus flytrap evolver1 evolver2 evolver3 carrier turtle");
+      div.removeClass("empty wall1 wall2 plant vine smart-plant-eater tiger virus" + 
+                       "flytrap evolver1 evolver2 evolver3 carrier turtle spanwer");
       
       switch (character) {
       case " ":
@@ -158,6 +159,12 @@ World.prototype.drawDivs = function() {
         div.addClass("turtle");
         div.text("o");
         div.css("color", element.color);
+        break;
+      case "?":
+        div.addClass("spawner");
+        div.text(character);
+        div.css("color", element.color);
+        break;
       }
     }
   }
@@ -267,6 +274,9 @@ actionTypes.reproduce = function(critter, vector, action) {
   if (critter.originChar === "3") { //evolver3 makes evolver1
     character = "1";
   }
+  if (critter.originChar === "?") { //if it's a spawner
+    var character = randomElement(["@", "O", "*", "~", "x", "V", "1", "2", "3", "&", "T"]);
+  }
   var baby = elementFromChar(this.legend, character);
   var dest = this.checkDestination(action, vector);
   if (dest === null || critter.energy <= 2 * baby.energy || this.grid.get(dest) != null) {
@@ -296,6 +306,7 @@ actionTypes.evolve = function(critter, vector, action) {
   this.grid.set(vector, elementFromChar(this.legend, form));
   return true;
 }
+
 
 
 
@@ -418,7 +429,8 @@ var legend = {"#": Wall,
               "2": EvolverHerbivore,
               "3": EvolverCarnivore,
               "&": Carrier,
-              "T": Turtle};
+              "T": Turtle,
+              "?": Spawner};
 
 var world = new LifelikeWorld(defaultWorld, legend);
 

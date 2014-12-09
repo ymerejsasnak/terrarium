@@ -362,3 +362,25 @@ Carrier.prototype.act = function(context) {
   }
   return {type: "move", direction: this.direction};
 }
+
+
+
+
+function Spawner() { //not a lifeform, doesn't interact with others, just makes random other lifeform periodically
+  this.energy = 1000;
+  this.color = "white";
+  this.moveCount = 0;   
+}
+Spawner.prototype.act = function(context) {
+  this.energy = 1000; //never dies
+  this.color = "rgb(" + (Math.floor(Math.random() * 255)) + 
+                  "," + (Math.floor(Math.random() * 255)) + 
+                  "," + (Math.floor(Math.random() * 255)) + ")";
+  
+  this.moveCount += 1;
+  var space = context.find(" ");
+  
+  if (this.moveCount % 5 === 0 && space) { //every 5 moves is good??
+    return {type: "reproduce", direction: space}
+  }
+}

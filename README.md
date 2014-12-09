@@ -27,6 +27,4 @@ TO DO:<br><br>
 --creator block -- periodically adds a random lifeform next to it<br>
 
 
---porcupine -- # -- herbivore that can't be eaten by carnivores...can eat flytrap...moves more slowly (give it a move counter)
-
 
