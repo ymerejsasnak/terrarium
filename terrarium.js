@@ -180,10 +180,20 @@ World.prototype.resetWorld = function(map, legend) {
     }
   });
 }
-World.prototype.clearWorld = function() {
+World.prototype.fillAll = function(character) {
   for (var y = 1; y < this.grid.height - 1; y++) {
     for (var x = 1; x < this.grid.width - 1; x++) {
-      this.grid.set(new Vector(x, y), null);
+      this.grid.set(new Vector(x, y), elementFromChar(this.legend, character));
+    }
+  }      
+}
+World.prototype.fillEmpty = function(character) {
+  for (var y = 1; y < this.grid.height - 1; y++) {
+    for (var x = 1; x < this.grid.width - 1; x++) {
+      var thisVector = new Vector(x, y);
+      if (this.grid.get(thisVector) === null) {
+        this.grid.set(thisVector, elementFromChar(this.legend, character));
+      }
     }
   }      
 }

@@ -43,12 +43,6 @@ $(document).ready(function() {
   });
 
 
-  $("#clear").on("click", function() {
-    world.clearWorld();
-    world.drawDivs();
-  });
-  
-
   var selectedElement = " ";  
 
   $("#edit-menu").on("change", function() {
@@ -57,6 +51,16 @@ $(document).ready(function() {
 
   $("#container").on("click", ".cell", function() {
     world.editCell($(this), selectedElement);
+    world.drawDivs();
+  });
+
+  $("#fill-all").on("click", function() {
+    world.fillAll(selectedElement);
+    world.drawDivs();
+  });
+
+  $("#fill-empty").on("click", function() {
+    world.fillEmpty(selectedElement);
     world.drawDivs();
   });
 

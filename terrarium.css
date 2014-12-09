@@ -225,8 +225,6 @@ td p:first-child {
   color: blue;
 }
 
-
-
 #about {
   position: absolute;
   display: none;
@@ -239,8 +237,9 @@ td p:first-child {
   height: 30%;
 
   background: linear-gradient(#FFF, #DDD);
-  border: 1px solid black;
+  
   border-radius: 20%;
+  box-shadow: 0 0 5px black;
 
   text-align: center;
   padding: 1%;
@@ -252,6 +251,7 @@ td p:first-child {
 
 #about p:first-child {
   font-weight: bold;
+  text-decoration: underline;
 }
 
 #about p:nth-child(2) {
