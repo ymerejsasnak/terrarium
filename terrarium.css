@@ -87,7 +87,7 @@ button:active {
   background: radial-gradient(#BEF0AD, #A9E8AE);
   float: left;
   cursor: default;
-  text-shadow: 1px 1px 2px gray;
+  text-shadow: 1px 1px 2px black;
 
   -moz-user-select: none; 
   -khtml-user-select: none; 
@@ -106,7 +106,7 @@ button:active {
 }
 
 .carrier {
-  text-shadow: 0 0 5px black;
+  text-shadow: 0 0 5px blue;
 }
 
 .evolver1, .evolver2, .evolver3 {
