@@ -123,10 +123,141 @@ button:active {
   top: 7%;
   left: 5.5%;
   right: 6%;
-
+  
+  box-sizing: border-box;
+  padding: .8%;
  
   height: 70%;
-  background: linear-gradient(#FFF, #DDF);
+  background: linear-gradient(#EEE, #DDD);
   box-shadow: 5px 5px 10px black;
   border: 1px solid black;
+
+  font-size: 1.1em;
+}
+
+table {
+  height: 99.7%;
+}
+
+td {
+  padding: .4%;
+  border: 1px solid black;
+  background: linear-gradient(#DDF, #EEF);
+}
+
+tr td:nth-child(odd)  {
+  border-right: none;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+
+tr td:nth-child(even) {
+  border-left: none;
+} 
+
+td p {
+  font-size: 1em;
+}
+
+td p:first-child {
+  font-weight: bold;
+  padding-right: 5%;
+}
+
+
+.legend {
+  box-sizing: border-box;
+  width: 2%;
+  height: 6%;
+  margin-left: .5%;
+  margin-top: .4%;
+  padding-top: 20%;
+  cursor: default;
+  color: black;
+  font-family: "Courier New", courier;
+  font-size: 5vmin;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 0 1px black;
+  -moz-user-select: none; 
+  -khtml-user-select: none; 
+  -webkit-user-select: none; 
+  -o-user-select: none; 
+
+}
+
+#legend-empty {
+  background: radial-gradient(#BEF0AD, #A9E8AE);
+}
+
+#legend-wall {
+  background: linear-gradient(#BD992D, #9E7D18);
+}
+
+#legend-spawner {
+  color: white;
+  text-shadow: 0 0 2px black;
+}
+
+.legend-plant {
+  color: green;
+}
+
+#legend-rabbit {
+  color: darkgray;
+}
+
+#legend-turtle {
+  color: yellow;
+  text-shadow: 0 0 1px black;
+}
+
+#legend-wolf {
+  color: darkred;
+}
+
+#legend-carrier {
+  color: pink;
+  text-shadow: 0 0 1px black;
+}
+.legend-evolver {
+  color: blue;
+}
+
+
+
+#about {
+  position: absolute;
+  display: none;
+  z-index: 3000;
+  top: 22.5%;
+  left: 65.5%;
+
+  box-sizing: border-box;
+  width: 27.5%;
+  height: 30%;
+
+  background: linear-gradient(#FFF, #DDD);
+  border: 1px solid black;
+  border-radius: 20%;
+
+  text-align: center;
+  padding: 1%;
+}
+
+#about p {
+  margin-top: 8%;
+}
+
+#about p:first-child {
+  font-weight: bold;
+}
+
+#about p:nth-child(2) {
+
+}
+
+#about p:nth-child(3) {
+  font-size:.75em;
 }

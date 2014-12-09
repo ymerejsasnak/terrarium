@@ -74,10 +74,17 @@ $(document).ready(function() {
 
   $("#help-button").on("click", function() {
     $("#help").toggle();
+    $("#about").toggle();
   });
 
   $("#help").on("click", function() {
     $(this).toggle();
+    $("#about").toggle();
+  });
+
+  $("#about").on("click", function() {
+    $(this).toggle();
+    $("#help").toggle();
   });
 
 });

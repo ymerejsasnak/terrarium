@@ -8,13 +8,10 @@ Unrealistic Life Simulator<br>
 TO DO:<br><br>
 
 
---clean up, organize code better, refactor, maybe split into more files, tweak ui, tweak stats, etc<br>
+--clean up, organize code better, refactor, maybe split into more files, tweak ui and display, tweak stats, etc<br>
+
 
 --(what is this css color error from?? doesn't seem to have any effect.  must be in js not css itself? (now it's gone?!?!?!))<br>
-
-
-
---add FILL button that fills grid with selectd element
 
 
 
@@ -28,10 +25,7 @@ TO DO:<br><br>
 
 
 
---add instructions and visual legend and about info(popup div)<br><br>
 
-
-
---maybe in future add an options button (with another popup div) that lets you change some of the creature settings<br>
-
+--add FILL button that fills grid with selectd element (change clear button)
+--add another button that only fills empty space
 
