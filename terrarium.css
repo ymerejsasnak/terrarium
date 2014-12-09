@@ -119,6 +119,7 @@ button:active {
 #help {
   display: none;
   position: absolute;
+  z-index: 2000;
   top: 7%;
   left: 5.5%;
   right: 6%;

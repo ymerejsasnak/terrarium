@@ -380,7 +380,7 @@ Spawner.prototype.act = function(context) {
   this.moveCount += 1;
   var space = context.find(" ");
   
-  if (this.moveCount % 5 === 0 && space) { //every 5 moves is good??
+  if (this.moveCount % 10 === 0 && space) { //every 10 moves is good??
     return {type: "reproduce", direction: space}
   }
 }
