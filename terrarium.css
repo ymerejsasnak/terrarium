@@ -74,7 +74,7 @@ button:active {
   margin: .4%;
 }
 
-#help {
+#help-button {
   margin-left: 1.4%;
 }
 
@@ -107,3 +107,16 @@ button:active {
 
 
 
+#help {
+  display: none;
+  position: absolute;
+  top: 7%;
+  left: 5.5%;
+  right: 6%;
+
+ 
+  height: 70%;
+  background: white;
+  border: 1px solid black;
+  border-radius: 5%;
+}

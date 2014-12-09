@@ -71,4 +71,9 @@ $(document).ready(function() {
     world.drawDivs();
   });
 
+
+  $("#help-button").on("click", function() {
+    $("#help").toggle();
+  });
+
 });
