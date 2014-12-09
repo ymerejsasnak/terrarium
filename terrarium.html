@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="terrarium.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="animateworld.js"></script>
+  <script src="entities.js"></script>
   <script src="terrarium.js"></script>
+  <script src="UI.js"></script>
   <title>UNREALISTIC LIFE SIMULATOR</title>
 </head>
 
@@ -31,16 +33,31 @@
 
     <label id="edit-label" for="edit-menu">Add Entity:</label>
     <select id="edit-menu" autocomplete="off">
+
       <option value=" " selected>empty cell</option>
       <option value="#">wall</option>
+
       <option disabled>---</option>
+      <option disabled>PLANTS</option>
       <option value="*">plant</option>
       <option value="~">vine</option>
       <option value="V">flytrap</option>
+
+      <option disabled>---</option>
+      <option disabled>ANIMALS</option>
       <option value="O">herbivore</option>
       <option value="@">carnivore</option>
+      
+      <option disabled>---</option>
+      <option disabled>EVOLVERS</option>
+      <option value="1">plant</option>
+      <option value="2">herbivore</option>
+      <option value="3">carnivore</option>
+
+      <option disabled>---</option>
+      <option disabled>MISC</option>
       <option value="x">virus</option>
-      <option value="1">evolver</option>
+
     </select>
 
     <button id="random">RANDOM</button>
