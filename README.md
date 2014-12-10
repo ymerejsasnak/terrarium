@@ -5,20 +5,13 @@ Unrealistic Life Simulator<br>
 (expanded from the "electronic life" project from Eloquent Javascript)<br><br><br>
 
 
-TO DO:<br><br>
+Future TO DO:<br><br>
 
 
 --clean up, organize code better, refactor, maybe split into more files, tweak ui and display (add more instructions?), tweak stats, etc<br>
 
+--add way to save/load with localstorage(popup divs) (save in json)  (start with just one at a time)<br>
 
---(what is this css color error from?? doesn't seem to have any effect.  must be in js not css itself? (now it's gone?!?!?!))<br>
+--change it so walls only have shadows on bottom and rightmost walls?
 
-
-
---add way to save/load with localstorage(popup divs) (save in json)  (may need seperate selector for my default maps and a user's maps<br>
-
---preset level ideas:  existing default world ('circle of life?'), "rabbits in the swamp" (vines, flytraps, herbivores),<br>
-                       "sprial of death" (walls in spiral shape FILLED with carnivores, with one virus at the end (visual fun));<br>
-                       plant world (plant, vine, flytrap, and include evolvers);<br>
-                       comparison level: split down middle by wall, exactly the same on both sides initially<br>
- 
+--add handler for right click (see 'contextmenu') to edit spawner rate and entities (checkboxes to select which ones it spawns)
