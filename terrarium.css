@@ -92,6 +92,10 @@ button:active {
   -o-user-select: none; 
 }
 
+.cell:hover {
+  border: 1px solid black;
+}
+
 .wall1 {
   background: linear-gradient(#BD992D, #9E7D18);
   box-shadow: 1px 1px 10px black;

@@ -1,12 +1,14 @@
 
-function Wall() {} //does nothing at all  (works in either world object)
+function Wall() { 
+  return;
+} //does nothing at all  (works in either world object)
 
 
 function Plant() {
   this.energy = 3 + Math.random() * 4;
   this.color = "rgb(0," + Math.floor(this.energy * 10 + 50) + ",0)";
 }
-Plant.prototype.act = function(context) {
+Plant.prototype.act = function (context) {
   if (this.energy > 15) {
     var space = context.find(" ");
     if (space) {
