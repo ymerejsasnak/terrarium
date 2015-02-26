@@ -1,6 +1,7 @@
 ##Unrealistic Life Simulator
 ###(expanded from the "electronic life" project from Eloquent Javascript)
 
+My favorite of my javascript projects!  (But the code is a mess!!!)
 
 ####TO DO:
 * clean up, organize code better, refactor, maybe split into more files, tweak ui and display (add more instructions?), tweak stats, etc

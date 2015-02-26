@@ -47,7 +47,7 @@ Vine.prototype.act = function(context) {
 }
 
 
-function SmartPlantEater() {
+function SmartPlantEater() { //'rabbit'
   this.energy = 20;
   this.direction = randomElement(directionNames);
   this.color = "rgb(" + (Math.floor(this.energy * 3)) + 
@@ -128,7 +128,7 @@ Turtle.prototype.act = function(context) {
 }
 
 
-function Tiger() { 
+function Tiger() {  //'wolf' in select box
   this.energy = 100;
   this.direction = randomElement(directionNames);
   this.preySeen = []; //works as queue
